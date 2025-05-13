@@ -465,7 +465,7 @@ const page = () => {
       {/* Result section */}
       <div className='w-full flex justify-around items-center py-4 flex-col '>
 
-        <h1>Result </h1>
+        <h1>Results </h1>
         <div className='w-[95%] bg-white  rounded-xl mt-12 p-2  flex gap-5 items-center border-[#c8c6c4] flex-col sm:flex-row justify-center'>
 
 
