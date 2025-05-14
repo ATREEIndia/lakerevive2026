@@ -16,7 +16,7 @@ export default function Home() {
       <Lottie animationData={website_amin} autoplay loop={true} ></Lottie>
 
     </div>
-      <Heading text="The home page of this app is under process. "></Heading>
+      <Heading text="The home page of this app is under progress. "></Heading>
       <SubHeading text='Please skip to the tool page'></SubHeading>
      <Link className="bg-blue-200 p-4 shadow-2xl text-xl font-semibold rounded-xl mt-4" href="/tool">Open Tool page</Link>     
     </div>
