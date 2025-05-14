@@ -4,18 +4,27 @@ import Image from "next/image";
 import Link from "next/link";
 import Heading from "./Components/Heading";
 import SubHeading from "./Components/SubHeading";
-import dynamic from 'next/dynamic';
-import website_amin from '@/public/website-working.json';
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import website_amin from "@/public/website-working.json";
 
 // Dynamically import Lottie with SSR disabled
-const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // only set to true after component has mounted
+  }, []);
+
   return (
     <main>
       <div className="flex flex-col w-full p-8 justify-center items-center">
         <div className="w-[300px]">
-          <Lottie animationData={website_amin} autoplay loop />
+          {isClient && (
+            <Lottie animationData={website_amin} autoplay loop />
+          )}
         </div>
         <Heading text="The home page of this app is under progress." />
         <SubHeading text="Please skip to the tool page" />
