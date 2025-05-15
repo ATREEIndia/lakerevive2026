@@ -58,34 +58,58 @@ const page = () => {
   }
   function updateInflowrate(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     Setinflowrate(isNaN(val) ? 0 : val);
   }
   function updateInflowtp(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     Setinflowtp(isNaN(val) ? 0 : val);
   }
   function updateLaketp(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     Setlaketp(isNaN(val) ? 0 : val);
   }
   function updatedepth(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     Setdepth(isNaN(val) ? 0 : val);
   }
   function updateLakeArea(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     SetlakeArea(isNaN(val) ? 0 : val);
   }
   function updateCWArea(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     SetcwArea(isNaN(val) ? 0 : val);
   }
   function updatesechidepth(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     Setsecchidepth(isNaN(val) ? 0 : val);
   }
   function updatefeasibledepth(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
+    if(val<0){
+      return;
+    }
     Setfeasible_depth(isNaN(val) ? 0 : val);
   }
 
@@ -228,7 +252,7 @@ const page = () => {
     const CW_outlet_conc = (incoming_load - reduction_of_load_for_CW) / inflowrate;
 
     const k_TP = isdepthAvaiable ? 0.1 : 0.07;
-    const area_of_CW = (inflowrate * Math.log(inflowtp) - Math.log(CW_outlet_conc)) / k_TP;
+    const area_of_CW = (inflowrate * (Math.log(inflowtp) - Math.log(CW_outlet_conc))) / k_TP; //edited
 
     console.log("self_assimilation_factor= " + self_assimilation_factor)
     console.log("self_assimilation_load= " + self_assimilation_load)
@@ -349,7 +373,7 @@ const page = () => {
 
 
             <div className='w-full flex flex-col my-4 gap-6'>
-              <Inputitem title={'Lake - Water spread area (m²)'} value={lakearea} updatefunction={updateLakeArea}></Inputitem>
+              <Inputitem title={'Lake - Water spread area (m²)'} value={lakearea>0?lakearea :''} updatefunction={updateLakeArea}></Inputitem>
 
               <Inputitem title={'Lake - Average depth (m)'} value={depth} updatefunction={updatedepth}></Inputitem>
 
@@ -364,7 +388,7 @@ const page = () => {
 
               <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg p-4 '>
                 <div className={` flex flex-col w-full`}>
-                  <Inputitem title={'Feasible depth -  Constructed wetland (m)'} disable_status={!isdepthAvaiable} value={feasible_depth} updatefunction={updatefeasibledepth}></Inputitem>
+                  <Inputitem title={'Feasible depth -  Constructed wetland (m)'} disable_status={!isdepthAvaiable} value={feasible_depth>0?feasible_depth:""} updatefunction={updatefeasibledepth}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${feasible_depth > 0 ? 'hidden' : 'flex'}`}>
                   <p className='text-blue-600 cursor-pointer' onClick={() => Setisdepthvailabe(!isdepthAvaiable)} >{isdepthAvaiable ? 'Feasible depth not available' : 'CW Sufficent Depth Available'}</p>
@@ -395,7 +419,7 @@ const page = () => {
                   <p className='text-red-600 text-xl cursor-pointer' onClick={()=>{Setisinlethoveropne(false)}}>x</p>
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={()=>{Setisinlethoveropne(true)}}>Note</p>
-                  <Inputitem title={'Inflow Rate (m³/day)'} disable_status={!isinflowavilable} value={inflowrate} updatefunction={updateInflowrate}></Inputitem>
+                  <Inputitem title={'Inflow Rate (m³/day)'} disable_status={!isinflowavilable} value={inflowrate>0?inflowrate:''} updatefunction={updateInflowrate}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${inflowrate > 0 ? 'hidden' : 'flex'}`}>
                   <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'No dry weather inflow' : 'Inflow Available'}</p>
@@ -403,13 +427,13 @@ const page = () => {
               </div>
 
 
-              <Inputitem title={'Total phospherous (TP) level (mg/L) - Inflow'} value={inflowtp} updatefunction={updateInflowtp}></Inputitem>
+              <Inputitem title={'Total phospherous (TP) level (mg/L) - Inflow'} value={inflowtp>0?inflowtp:''} updatefunction={updateInflowtp}></Inputitem>
 
-              <Inputitem title={'Total phospherous (TP) level (mg/L) - Inlake'} value={laketp} updatefunction={updateLaketp}></Inputitem>
+              <Inputitem title={'Total phospherous (TP) level (mg/L) - Inlake'} value={laketp>0?laketp:''} updatefunction={updateLaketp}></Inputitem>
 
 
 
-              <Inputitem title={'Secchi Depth (m)'} value={secchidepth} updatefunction={updatesechidepth}></Inputitem>
+              <Inputitem title={'Secchi Depth (m)'} value={secchidepth>0?secchidepth:''} updatefunction={updatesechidepth}></Inputitem>
 
             </div>
 
