@@ -95,7 +95,7 @@ const page = () => {
   }, [])
 
   useEffect(() => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+   // window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }, [showcw, showfi]);
 
 
@@ -333,7 +333,7 @@ const page = () => {
         {/* conatiner left */}
         <div className=' lg:w-[40%] w-full  lg:justify-start items-center flex flex-col pt-2 '>
           <div className='flex justify-center items-center px-4'>
-            <Heading text='Lake Health Assesment Parameters'></Heading>
+            <Heading text='NbS design -Input parameters '></Heading>
           </div>
 
 
@@ -344,33 +344,34 @@ const page = () => {
 
 
             <div className='mt-5'>
-              <SubHeading text='LAKE MORPHOLOGY DETAILS' customClassName='font-semibold underline'></SubHeading>
+              <SubHeading text='MORPHOLOGY' customClassName='font-semibold underline'></SubHeading>
             </div>
 
 
             <div className='w-full flex flex-col my-4 gap-6'>
-              <Inputitem title={'Lake Area (m²)'} value={lakearea} updatefunction={updateLakeArea}></Inputitem>
+              <Inputitem title={'Lake - Water spread area (m²)'} value={lakearea} updatefunction={updateLakeArea}></Inputitem>
 
-              <Inputitem title={'Lake Depth (m)'} value={depth} updatefunction={updatedepth}></Inputitem>
+              <Inputitem title={'Lake - Average depth (m)'} value={depth} updatefunction={updatedepth}></Inputitem>
 
-
-              <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg p-4 '>
+ <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg p-4 '>
                 <div className={` flex flex-col w-full`}>
-                  <Inputitem title={'Feasible Depth for Wetland (m)'} disable_status={!isdepthAvaiable} value={feasible_depth} updatefunction={updatefeasibledepth}></Inputitem>
-                </div>
-                <div className={` justify-end px-8 mt-4 ${feasible_depth > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisdepthvailabe(!isdepthAvaiable)} >{isdepthAvaiable ? 'CW Sufficent Depth Not Available' : 'CW Sufficent Depth Available'}</p>
-                </div>
-              </div>
-
-              <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg p-4 '>
-                <div className={` flex flex-col w-full`}>
-                  <Inputitem title={'Available CW Area (m²)'} disable_status={!isareaavaiable} value={cwArea} updatefunction={updateCWArea}></Inputitem>
+                  <Inputitem title={'Available area - Constructed wetland (m²)'} disable_status={!isareaavaiable} value={cwArea} updatefunction={updateCWArea}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${cwArea > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisareaavailabe(!isareaavaiable)} >{isareaavaiable ? 'CW Area Not Available' : 'CW Area Available'}</p>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisareaavailabe(!isareaavaiable)} >{isareaavaiable ? 'Area not available' : 'CW Area Available'}</p>
                 </div>
               </div>
+
+              <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg p-4 '>
+                <div className={` flex flex-col w-full`}>
+                  <Inputitem title={'Feasible depth -  Constructed wetland (m)'} disable_status={!isdepthAvaiable} value={feasible_depth} updatefunction={updatefeasibledepth}></Inputitem>
+                </div>
+                <div className={` justify-end px-8 mt-4 ${feasible_depth > 0 ? 'hidden' : 'flex'}`}>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisdepthvailabe(!isdepthAvaiable)} >{isdepthAvaiable ? 'Feasible depth not available' : 'CW Sufficent Depth Available'}</p>
+                </div>
+              </div>
+
+             
 
 
             </div>
@@ -378,7 +379,7 @@ const page = () => {
 
 
             <div className='mt-5'>
-              <SubHeading text='WATER QUALITY DETAILS' customClassName='font-semibold underline'></SubHeading>
+              <SubHeading text='HYDROLOGY AND WATER QUALITY' customClassName='font-semibold underline'></SubHeading>
             </div>
 
 
@@ -397,14 +398,14 @@ const page = () => {
                   <Inputitem title={'Inflow Rate (m³/day)'} disable_status={!isinflowavilable} value={inflowrate} updatefunction={updateInflowrate}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${inflowrate > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'Inflow Not Available' : 'Inflow Available'}</p>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'No dry weather inflow' : 'Inflow Available'}</p>
                 </div>
               </div>
 
 
-              <Inputitem title={'Inflow TP Conc (mg/L)'} value={inflowtp} updatefunction={updateInflowtp}></Inputitem>
+              <Inputitem title={'Total phospherous (TP) level (mg/L) - Inflow'} value={inflowtp} updatefunction={updateInflowtp}></Inputitem>
 
-              <Inputitem title={'Lake TP Conc (mg/L)'} value={laketp} updatefunction={updateLaketp}></Inputitem>
+              <Inputitem title={'Total phospherous (TP) level (mg/L) - Inlake'} value={laketp} updatefunction={updateLaketp}></Inputitem>
 
 
 
@@ -426,10 +427,10 @@ const page = () => {
           <div className='w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-1 lg:px-4'>
 
             <ObservationsTab title='Fish kills'
-              explanation='Did you observed any dead fish floating on the surface or gathering near the shore.'
+              explanation='Did you observe any dead fish floating on the surface or gathering near the shore.'
               image={deadfishimage}></ObservationsTab>
 
-            <ObservationsTab title='Algal Bloom'
+            <ObservationsTab title='Algal bloom'
               explanation=' Seen green or coloured patches spreading across the lake? '
               image={algalbloomimage}></ObservationsTab>
 
@@ -444,8 +445,8 @@ const page = () => {
           </div>
           <div className='w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 sm:gap-1 lg:px-4'>
 
-            <ObservationsTab title='Foaming on the Water'
-              explanation='Have you seen foam forming along the edges or surface of the lake?'
+            <ObservationsTab title='Foaming on the lake'
+              explanation='Have you observed foam forming along the edges or surface of the lake?'
               image={foamimage}></ObservationsTab>
           </div>
 
