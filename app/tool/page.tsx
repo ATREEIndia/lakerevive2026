@@ -15,6 +15,7 @@ import fi_img from '@/public/floating-island_ILLUSTRATION.png'
 import CW_img from '@/public/Cw_illustration.png'
 import Head from 'next/head'
 import { Shojumaru } from 'next/font/google'
+import Result from '../Components/Result'
 
 const page = () => {
   //input
@@ -671,6 +672,7 @@ const page = () => {
       <div className='w-full flex justify-around items-center py-4 flex-col '>
 
         <h1>Results </h1>
+        <Result/>
         <div className='w-[95%] bg-white  rounded-xl mt-12 p-2  flex gap-5 items-center border-[#c8c6c4] flex-col sm:flex-row justify-center'>
 
 
