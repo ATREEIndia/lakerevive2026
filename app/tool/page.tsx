@@ -17,6 +17,9 @@ import Head from 'next/head'
 import { Shojumaru } from 'next/font/google'
 import Result from '../Components/Result'
 
+import { Fi_imgs, CW_imgs, vegitation_imgs } from '../Constants'
+
+
 const page = () => {
   //input
   const [Input_lakename, Setlakename] = useState("");
@@ -40,20 +43,28 @@ const page = () => {
   const [isfeasible_depthnote_open, Setisfeasible_depthnote_open] = useState(false)
 
   //results
+  // const [showfi, Setshowfi] = useState(false);
+  // const [showcw, Setshowcw] = useState(false);
+  // const [final_no_fi, Set_final_no_fi] = useState(0)
+  // const [aditional_load_after_fi, Set_aditional_load_after_fi] = useState(0)
+  // const [area_consumed_fi, Set_area_consumed_fi] = useState(0)
+  // const [Max_load_removed, Set_max_load_removed] = useState(0)
+  // const [Load_for_CW, Set_Load_for_CW] = useState(0)
+
+
+  // const [Area_of_the_CW, Set_Area_of_the_CW] = useState(0)
+  // const [Cout_based_on_area_available_at_site, Set_Cout_based_on_area_available_at_site] = useState(0)
+  // const [load_outflow_CW, Set_load_outflow_CW] = useState(0)
+  // const [load_uptaken_by_new_CW, Set_load_uptaken_by_new_CW] = useState(0)
+  // const [Load_for_FI, Set_Load_for_FI] = useState(0)
+
+  const [result_fi_area, Set_result_fi_area] = useState('0')
+  const [result_CW_area, Set_result_CW_area] = useState('0')
+  const [result_fi_percent, Set_result_fi_percent] = useState('0')
+  const [result_CW_percent, Set_result_CW_percent] = useState('0')
   const [showfi, Setshowfi] = useState(false);
   const [showcw, Setshowcw] = useState(false);
-  const [final_no_fi, Set_final_no_fi] = useState(0)
-  const [aditional_load_after_fi, Set_aditional_load_after_fi] = useState(0)
-  const [area_consumed_fi, Set_area_consumed_fi] = useState(0)
-  const [Max_load_removed, Set_max_load_removed] = useState(0)
-  const [Load_for_CW, Set_Load_for_CW] = useState(0)
-
-
-  const [Area_of_the_CW, Set_Area_of_the_CW] = useState(0)
-  const [Cout_based_on_area_available_at_site, Set_Cout_based_on_area_available_at_site] = useState(0)
-  const [load_outflow_CW, Set_load_outflow_CW] = useState(0)
-  const [load_uptaken_by_new_CW, Set_load_uptaken_by_new_CW] = useState(0)
-  const [Load_for_FI, Set_Load_for_FI] = useState(0)
+  const [showresult, Setshowresult] = useState(false);
 
   function updateLakeName(e: React.ChangeEvent<HTMLInputElement>) {
     const val = (e.target.value);
@@ -116,14 +127,7 @@ const page = () => {
     Setfeasible_depth(isNaN(val) ? 0 : val);
   }
 
-  useEffect(() => {
 
-
-  }, [])
-
-  useEffect(() => {
-    // window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-  }, [showcw, showfi]);
 
 
   function isfieldsvalid() {
@@ -132,15 +136,28 @@ const page = () => {
       alert('Enter Name of the lake');
       Setisleknamevalid(false)
 
+
       return false;
     } else {
       Setisleknamevalid(true)
+    }
+
+    if(Input_lakearea<1 || Input_lakedepth <0.01 || Input_laketp<0.01){
+      alert('Input valid data');
+      return false;
     }
     return true;
   }
 
   function calculation2() {
     console.log('calculating')
+    Set_result_fi_area('0')
+    Set_result_CW_area('0')
+    Set_result_fi_percent('0')
+    Set_result_CW_percent('0')
+    Setshowfi(false);
+    Setshowcw(false);
+    Setshowresult(false)
 
 
 
@@ -176,6 +193,13 @@ const page = () => {
         Result_area_req_fi = area_required_fi;
         Result_percent_area_of_lake_covered_by_fi = area_required_fi < _25_percent_of_lake_area ? (area_required_fi / Input_lakearea) * 100 : 0;
 
+        Set_result_fi_area(Result_area_req_fi.toFixed(2))
+        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
+        Setshowfi(true);
+        Setshowcw(false);
+         Setshowresult(true)
+
+
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
         console.log('Result_percent_area_of_lake_covered_by_fi= ' + Result_percent_area_of_lake_covered_by_fi)
 
@@ -190,7 +214,7 @@ const page = () => {
         const assumed_percolation_evaporation_outflow = loss_percolation * Input_lakearea;
         const HRT = volume / assumed_percolation_evaporation_outflow;
         const target_conc = 0.8;
-        const load_in_lake = (volume * Input_laketp) /1000;
+        const load_in_lake = (volume * Input_laketp) / 1000;
         const req_load = volume * target_conc / 1000;
         const removal_required = load_in_lake - req_load;
         const req_perday = removal_required / HRT;
@@ -215,6 +239,12 @@ const page = () => {
         Result_area_req_fi = area_req_by_fi;
         Result_percent_area_of_lake_covered_by_fi = area_req_by_fi < _25_percent_lake_area ? (area_req_by_fi / Input_lakearea) * 100 : 0;
 
+        Set_result_fi_area(Result_area_req_fi.toFixed(2))
+        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
+        Setshowfi(true);
+        Setshowcw(false);
+           Setshowresult(true)
+
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
         console.log('Result_percent_area_of_lake_covered_by_fi= ' + Result_percent_area_of_lake_covered_by_fi)
         return
@@ -223,6 +253,7 @@ const page = () => {
 
       // calculating for CW
       console.log('on CW_calculation')
+      
       let awailable_area_restricted_to_25p = Input_cwArea > 0.25 * Input_lakearea ? 0.25 * Input_lakearea : Input_cwArea;
       const self_assimilation_factor = (Input_inflowrate * Input_inflowtp) / Input_laketp;
       const self_assimilation_load = self_assimilation_factor * 0.8;
@@ -237,18 +268,18 @@ const page = () => {
       const removal_by_CW = incoming_load - load_outflow_CW;
       const load_for_FI = awailable_area_restricted_to_25p > area_of_CW ? 0 : (reduction_of_load_for_CW > removal_by_CW ? reduction_of_load_for_CW - removal_by_CW : 0);
 
-      // console.log("available_area_restricted_to_25p =", awailable_area_restricted_to_25p);
-      // console.log("self_assimilation_factor =", self_assimilation_factor);
-      // console.log("self_assimilation_load =", self_assimilation_load);
-      // console.log("incoming_load =", incoming_load);
-      // console.log("reduction_of_load_for_CW =", reduction_of_load_for_CW);
-      // console.log("CW_outlet_conc =", CW_outlet_conc);
-      // console.log("area_of_CW =", area_of_CW);
-      // console.log("exponent =", exponent);
-      // console.log("Cout_based_on_area_available_at_site =", Cout_based_on_area_available_at_site);
-      // console.log("load_outflow_CW =", load_outflow_CW);
-      // console.log("removal_by_CW =", removal_by_CW);
-      // console.log("load_for_FI =", load_for_FI);
+      console.log("available_area_restricted_to_25p =", awailable_area_restricted_to_25p);
+      console.log("self_assimilation_factor =", self_assimilation_factor);
+      console.log("self_assimilation_load =", self_assimilation_load);
+      console.log("incoming_load =", incoming_load);
+      console.log("reduction_of_load_for_CW =", reduction_of_load_for_CW);
+      console.log("CW_outlet_conc =", CW_outlet_conc);
+      console.log("area_of_CW =", area_of_CW);
+      console.log("exponent =", exponent);
+      console.log("Cout_based_on_area_available_at_site =", Cout_based_on_area_available_at_site);
+      console.log("load_outflow_CW =", load_outflow_CW);
+      console.log("removal_by_CW =", removal_by_CW);
+      console.log("load_for_FI =", load_for_FI);
 
       //---------result---------------------// 
       const Result_area_of_CW = load_for_FI > 0 ? awailable_area_restricted_to_25p : area_of_CW;
@@ -269,12 +300,29 @@ const page = () => {
         //----------result-----------------------//
         Result_area_req_fi = area_required_fi;
         Result_percent_area_of_lake_covered_by_fi = percent_of_area_covered_by_fi;
+        Set_result_fi_area(Result_area_req_fi.toFixed(2))
+        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
+        Setshowfi(true);
+        Setshowresult(true);
 
       }
 
       //--------------Overall result------------//
       const Result_percent_total_area_covered = (Result_percent_area_of_lake_covered_by_fi + Result_percent_area_covered_bt_CW);
       Remarks = Result_percent_total_area_covered > 25 ? 'NbS Not sufficient' : "NbS is sufficient";
+      Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Result_area_of_CW.toFixed(2))
+      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Result_percent_area_covered_bt_CW.toFixed(2))
+       
+       if(Result_percent_total_area_covered > 25 ){
+        Setshowfi(false);
+        Setshowresult(false);
+       }else{
+        Setshowcw(true);
+       }
+       Setshowresult(true)
+
+
+
 
 
       console.log("Result_percent_total_area_covered= " + Result_percent_total_area_covered)
@@ -528,6 +576,7 @@ const page = () => {
 
   return (
     <div className='w-full'>
+
       <Banner></Banner>
       <div className='w-full p-4 flex flex-col gap-2 sm:flex-row justify-between bg-[#fffdfc] '>
 
@@ -602,7 +651,7 @@ const page = () => {
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={() => { Setisinlethoveropne(true) }}>Note</p>
                   <Inputitem title={'Inflow Rate (m³/day)'} disable_status={!isinflowavilable} value={Input_inflowrate > 0 ? Input_inflowrate : ''} updatefunction={updateInflowrate}></Inputitem>
-                   <Inputitem title={'Total phospherous (TP) level (mg/L) - Inflow'} disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
+                  <Inputitem title={'Total phospherous (TP) level (mg/L) - Inflow'} disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_inflowrate > 0 ? 'hidden' : 'flex'}`}>
                   <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'No dry-weather inflow' : 'Dry-weather inflow Available'}</p>
@@ -610,7 +659,7 @@ const page = () => {
               </div>
 
               {/* Total phospherous */}
-             
+
 
               <Inputitem title={'Total phospherous (TP) level (mg/L) - Inlake'} value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp}></Inputitem>
 
@@ -659,7 +708,7 @@ const page = () => {
 
 
       </div>
-      <div className='w-full py-4 flex flex-col justify-center items-center'>
+      <div className='w-full py-4 flex flex-col justify-center items-center pb-10'>
         <button onClick={calculation2}
           className='px-10 cursor-pointer py-3 bg-[#1e8989] text-white font-semibold rounded-xl shadow-md hover:bg-[#60adad] active:scale-95 transition transform duration-150'
         >
@@ -669,77 +718,42 @@ const page = () => {
 
 
       {/* Result section */}
-      <div className='w-full flex justify-around items-center py-4 flex-col '>
+      <div className={` ${showresult?'flex':'hidden'}  w-full  justify-center items-center  `}>
+        <>{console.log('showcw= '+showcw)}</>
+        <>{console.log('showfi= '+showfi)}</>
 
-        <h1>Results </h1>
-        <Result/>
-        <div className='w-[95%] bg-white  rounded-xl mt-12 p-2  flex gap-5 items-center border-[#c8c6c4] flex-col sm:flex-row justify-center'>
-
-
-          <div className={` lg:w-[50%] border-2 rounded-xl border-gray-200 p-4 flex-col ${showcw ? 'flex' : 'hidden'}`}>
-            <div className=' flex justify-center items-center '>
-              <Heading text='Constructed Wetland'></Heading>
-            </div>
-            <div className='flex h-full items-center justify-center flex-col lg:flex-row'>
-              <Image src={CW_img} width={200} alt=''></Image>
-              <div className='p-4 w-fill h-full flex flex-col gap-5 justify-center'>
-                <div>Required Area for CW: {Area_of_the_CW.toFixed(2)} </div>
-                <div>Availabe Area: {Input_cwArea.toFixed(2)} </div>
-                <div>Total Load: {Load_for_CW} </div>
-                <div>Load uptaken: {load_uptaken_by_new_CW.toFixed(2)} </div>
-                <div>Aditional Load for FI: {Load_for_FI.toFixed(2)} </div>
-                <div className='w-full flex justify-center'>
-                  <button className='px-5 cursor-pointer py-2 bg-[#1e8989] text-white font-semibold rounded-xl shadow-md hover:bg-[#60adad] active:scale-95 transition transform duration-150'
-                  >
-                    Know More
-                  </button> </div>
-
-              </div>
-            </div>
-
-
-
+        <div className={`${(showcw && !showfi) ? 'flex flex-col ' : 'hidden'} justify-center items-center  `}>
+          <p >You need constructed wetland Nbs</p>
+          <div className='flex flex-col lg:flex-row'>
+            <Result title='Constructed Wetland' description='' images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
+            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
           </div>
-
-
-
-
-
-          <div className={` lg:w-[50%] border-2 rounded-xl border-gray-200 p-4 flex-col ${showfi ? 'flex' : 'hidden'}`}>
-            <div className=' flex justify-center items-center'>
-              <Heading text='Floating Island'></Heading>
-            </div>
-            <div className='flex h-full items-center justify-center flex-col lg:flex-row'>
-              <Image src={fi_img} width={200} alt=''></Image>
-              <div className='p-4 w-fill h-full flex flex-col gap-5 justify-center'>
-                <div>Load: {Load_for_FI.toFixed(2)} </div>
-                <div>Number of FI Required: {final_no_fi} </div>
-                <div>Area Consumed: {area_consumed_fi} </div>
-                <div>Max Load can be Removed: {Max_load_removed} </div>
-                <div>Aditional Load Remaining: {aditional_load_after_fi} </div>
-                <div className='w-full flex justify-center'>
-                  <button
-                    className='px-5 cursor-pointer py-2 bg-[#1e8989] text-white font-semibold rounded-xl shadow-md hover:bg-[#60adad] active:scale-95 transition transform duration-150'
-                  >
-                    Know More
-                  </button> </div>
-
-              </div>
-            </div>
-
-
-
-          </div>
-
 
         </div>
 
-        {/* <p>Area of the CW(m2): {Area_of_the_CW}</p>
-        <p>Cout based on area available at site (mg/l): {Cout_based_on_area_available_at_site}</p>
-        <p>Load outflow CW(g/day): {load_outflow_CW}</p>
-        <p>Load uptaken by new CW(g/d): {load_uptaken_by_new_CW}</p>
-        <p>Load for FI(g/d): {Load_for_FI}</p> */}
+        <div className={`${(!showcw && showfi) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col`}>
+          <p >You need Floating island Nbs as Constructed weltand is not feasible</p>
+          <div className='flex flex-col lg:flex-row'>
+            <Result title='Floating island' description='' images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
+            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
+          </div>
+        </div>
 
+        <div className={`${(showcw && showfi) ? 'flex flex-col' : 'hidden'}  justify-center items-center flex-col`}>
+          <p  >You need  both constructed wetland and floating island Nbs as CW alone can not help</p>
+          <div className='flex flex-col lg:flex-row'>
+            <Result title='Constructed Wetland' description='' images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
+            <Result title='Floating island' description='' images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
+            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
+          </div>
+        </div>
+
+        <div className={`${((!showcw && !showfi)) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col `}>
+          <p >None of the Nbs solution works for you</p>
+          <div className='flex flex-col lg:flex-row'>
+            {/* <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} /> */}
+          </div>
+        </div>
       </div>
     </div>
 
