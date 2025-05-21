@@ -617,7 +617,7 @@ const page = () => {
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
-                    <p className='p-8'> If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal CW is considered for calculations. If not, free-water surface CW would be used.
+                    <p className='p-8'> If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal constructed wetland (CW) is considered for calculations. If not, free-water surface CW would be used.
 </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(false) }}>x</p>
                   </div>
@@ -651,8 +651,8 @@ const page = () => {
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisinlethoveropne(false) }}>x</p>
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={() => { Setisinlethoveropne(true) }}>Note</p>
-                  <Inputitem title={'Inflow Rate (m³/day)'} disable_status={!isinflowavilable} value={Input_inflowrate > 0 ? Input_inflowrate : ''} updatefunction={updateInflowrate}></Inputitem>
-                  <Inputitem title={'Total phospherous (TP) level (mg/L) - Inflow'} disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
+                  <Inputitem title={'Inflow rate (m³/day)'} disable_status={!isinflowavilable} value={Input_inflowrate > 0 ? Input_inflowrate : ''} updatefunction={updateInflowrate}></Inputitem>
+                  <Inputitem title={'Total phosphorus (TP) level (mg/L) - Inflow'} disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_inflowrate > 0 ? 'hidden' : 'flex'}`}>
                   <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'No dry-weather inflow' : 'Dry-weather inflow Available'}</p>
@@ -662,7 +662,7 @@ const page = () => {
               {/* Total phospherous */}
 
 
-              <Inputitem title={'Total phospherous (TP) level (mg/L) - Inlake'} value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp}></Inputitem>
+              <Inputitem title={'Total phosphorus (TP) level (mg/L) - Inlake'} value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp}></Inputitem>
 
               <Inputitem title={'Secchi Depth (m)'} value={Input_secchidepth > 0 ? Input_secchidepth : ''} updatefunction={updatesechidepth}></Inputitem>
 
