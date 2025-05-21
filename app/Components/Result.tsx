@@ -31,7 +31,7 @@ const Result = ({title, area='0', percent, images, btn_link, description}:result
                 <div className={`${area?.length>1?'flex flex-col':'hidden'} px-4 py-2`}>
                      <p>Area required : {area}</p>
                 <p>Lake area covered : {percent} </p>
-                <h1 className='w-full  text-center mt-2 font-medium text-lg'>Why this suggestion</h1> 
+                <h1 className='w-full  text-center mt-2 font-medium text-lg'>Why this suggestion?</h1> 
                 </div>
                 <div className={`${area?.length>1?'flex':'mt-5'} px-4 py-2`}>
                    <p>{description}</p> 

@@ -606,7 +606,7 @@ const page = () => {
               {/*Available area */}
               <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full`}>
-                  <Inputitem title={'Available area - Constructed wetland (m²)'} disable_status={!isareaavaiable} value={Input_cwArea > 0 ? Input_cwArea : ''} updatefunction={updateCWArea}></Inputitem>
+                  <Inputitem title={'Area available - Constructed wetland (m²)'} disable_status={!isareaavaiable} value={Input_cwArea > 0 ? Input_cwArea : ''} updatefunction={updateCWArea}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_cwArea > 0 ? 'hidden' : 'flex'}`}>
                   <p className='text-blue-600 cursor-pointer' onClick={() => Setisareaavailabe(!isareaavaiable)} >{isareaavaiable ? 'Area not available' : 'Area available'}</p>
@@ -617,7 +617,8 @@ const page = () => {
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
-                    <p className='p-8'>Note: yet to recieive the content</p>
+                    <p className='p-8'> If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal CW is considered for calculations. If not, free-water surface CW would be used.
+</p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(false) }}>x</p>
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(true) }}>Note</p>
@@ -644,8 +645,8 @@ const page = () => {
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full gap-6`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isinlethoveropen ? 'flex' : 'hidden'}`}>
-                    <p className='p-8'>Note: For Multiple inlets, enter the details individiually to determine intervention for each inlet. Incase you wish to combine multiple
-                      inltes you may consider weighted averages for the inlets using the formula; <br></br> ( (Q₁ × C₁ + Q₂ × C₂ + … + Qₙ × Cₙ) ÷ (Q₁ + Q₂ + … + Qₙ) )
+                    <p className='p-8'>Note: For Multiple inlets, enter the details individually to determine intervention for each inlet. Incase you wish to combine multiple
+                      inltes you may consider weighted averages for the inlets using the formula; <br></br> ( (Q₁ × C₁ + Q₂ × C₂ + … + Qₙ × Cₙ) ÷ (Q₁ + Q₂ + … + Qₙ) ) <br></br> where  Q is inflow rate of inlets and C is Concentration.  
                     </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisinlethoveropne(false) }}>x</p>
                   </div>
@@ -723,16 +724,21 @@ const page = () => {
         <>{console.log('showfi= '+showfi)}</>
 
         <div className={`${(showcw && !showfi) ? 'flex flex-col ' : 'hidden'} justify-center items-center  `}>
-          <p >You need constructed wetland Nbs</p>
+          <p >Only CW is required</p>
           <div className='flex flex-col lg:flex-row'>
-            <Result title='Constructed Wetland' description='' images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
+            <Result title='Constructed Wetland' description={`The tool recommends CW as the sole intervention when:
+Sufficient area is available for CW implementation
+CW alone can achieve the required nutrient removal
+Calculated area requirements for CW are below 25% of the lake area`}
+
+            images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
             <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
           </div>
 
         </div>
 
         <div className={`${(!showcw && showfi) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col`}>
-          <p >You need Floating island Nbs as Constructed weltand is not feasible</p>
+          <p >Only FI is  required</p>
           <div className='flex flex-col lg:flex-row'>
             <Result title='Floating island' description='' images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
             <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
@@ -740,7 +746,7 @@ const page = () => {
         </div>
 
         <div className={`${(showcw && showfi) ? 'flex flex-col' : 'hidden'}  justify-center items-center flex-col`}>
-          <p  >You need  both constructed wetland and floating island Nbs as CW alone can not help</p>
+          <p  >Combination of CW and FI is required</p>
           <div className='flex flex-col lg:flex-row'>
             <Result title='Constructed Wetland' description='' images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
             <Result title='Floating island' description='' images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
@@ -749,7 +755,7 @@ const page = () => {
         </div>
 
         <div className={`${((!showcw && !showfi)) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col `}>
-          <p >None of the Nbs solution works for you</p>
+          <p >NbS is not feasible</p>
           <div className='flex flex-col lg:flex-row'>
             {/* <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} /> */}
           </div>
