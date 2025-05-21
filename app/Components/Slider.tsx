@@ -39,7 +39,7 @@ const Slider = ({ images }: sliderproms) => {
             <Carousel responsive={responsive} infinite={true} keyBoardControl={true} >
                 {images.map((img, index) => {
                     return <div className='h-[400px] object-cover'>
-                        <Image className='object-cover' key={index} src={img} alt='' fill></Image>
+                        <Image className='' key={index} src={img} alt='' fill></Image>
                     </div>
                 })}
 

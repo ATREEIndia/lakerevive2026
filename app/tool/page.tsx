@@ -142,7 +142,7 @@ const page = () => {
       Setisleknamevalid(true)
     }
 
-    if(Input_lakearea<1 || Input_lakedepth <0.01 || Input_laketp<0.01){
+    if (Input_lakearea < 1 || Input_lakedepth < 0.01 || Input_laketp < 0.01) {
       alert('Input valid data');
       return false;
     }
@@ -168,7 +168,7 @@ const page = () => {
 
       //revere this
 
-      
+
 
       if (isinflowavilable && !isareaavaiable) {
         console.log('on f1 condition')
@@ -202,7 +202,7 @@ const page = () => {
         Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
         Setshowfi(true);
         Setshowcw(false);
-         Setshowresult(true)
+        Setshowresult(true)
 
 
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
@@ -211,7 +211,7 @@ const page = () => {
         return
       }
 
-      if (!isinflowavilable ) {
+      if (!isinflowavilable) {
         //fi condition 2
         console.log('on f2 condition')
         const volume = (Input_lakedepth * Input_lakearea) * 1000
@@ -248,7 +248,7 @@ const page = () => {
         Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
         Setshowfi(true);
         Setshowcw(false);
-           Setshowresult(true)
+        Setshowresult(true)
 
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
         console.log('Result_percent_area_of_lake_covered_by_fi= ' + Result_percent_area_of_lake_covered_by_fi)
@@ -258,7 +258,7 @@ const page = () => {
 
       // calculating for CW
       console.log('on CW_calculation')
-      
+
       let awailable_area_restricted_to_25p = Input_cwArea > 0.25 * Input_lakearea ? 0.25 * Input_lakearea : Input_cwArea;
       const self_assimilation_factor = (Input_inflowrate * Input_inflowtp) / Input_laketp;
       const self_assimilation_load = self_assimilation_factor * 0.8;
@@ -317,14 +317,14 @@ const page = () => {
       Remarks = Result_percent_total_area_covered > 25 ? 'NbS Not sufficient' : "NbS is sufficient";
       Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Result_area_of_CW.toFixed(0))  //round up
       Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Result_percent_area_covered_bt_CW.toFixed(1))
-       
-       if(Result_percent_total_area_covered > 25 ){
+
+      if (Result_percent_total_area_covered > 25) {
         Setshowfi(false);
         Setshowresult(false);
-       }else{
+      } else {
         Setshowcw(true);
-       }
-       Setshowresult(true)
+      }
+      Setshowresult(true)
 
 
 
@@ -623,7 +623,7 @@ const page = () => {
                 <div className={` flex flex-col w-full`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
                     <p className='p-8'> If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal constructed wetland (CW) is considered for calculations. If not, free-water surface CW would be used.
-</p>
+                    </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(false) }}>x</p>
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(true) }}>Note</p>
@@ -651,7 +651,7 @@ const page = () => {
                 <div className={` flex flex-col w-full gap-6`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isinlethoveropen ? 'flex' : 'hidden'}`}>
                     <p className='p-8'>Note: For Multiple inlets, enter the details individually to determine intervention for each inlet. Incase you wish to combine multiple
-                      inltes you may consider weighted averages for the inlets using the formula; <br></br> ( (Q₁ × C₁ + Q₂ × C₂ + … + Qₙ × Cₙ) ÷ (Q₁ + Q₂ + … + Qₙ) ) <br></br> where  Q is inflow rate of inlets and C is Concentration.  
+                      inltes you may consider weighted averages for the inlets using the formula; <br></br> ( (Q₁ × C₁ + Q₂ × C₂ + … + Qₙ × Cₙ) ÷ (Q₁ + Q₂ + … + Qₙ) ) <br></br> where  Q is inflow rate of inlets and C is Concentration.
                     </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisinlethoveropne(false) }}>x</p>
                   </div>
@@ -724,19 +724,16 @@ const page = () => {
 
 
       {/* Result section */}
-      <div className={` ${showresult?'flex':'hidden'}  w-full  justify-center items-center  `}>
-        <>{console.log('showcw= '+showcw)}</>
-        <>{console.log('showfi= '+showfi)}</>
+      <div className={` ${showresult ? 'flex' : 'hidden'}  w-full  justify-center items-center  `}>
+        <>{console.log('showcw= ' + showcw)}</>
+        <>{console.log('showfi= ' + showfi)}</>
 
         <div className={`${(showcw && !showfi) ? 'flex flex-col ' : 'hidden'} justify-center items-center  `}>
           <p >Only CW is required</p>
           <div className='flex flex-col lg:flex-row'>
-            <Result title='Constructed Wetland' description={`The tool recommends CW as the sole intervention when:
-Sufficient area is available for CW implementation
-CW alone can achieve the required nutrient removal
-Calculated area requirements for CW are below 25% of the lake area`}
+            <Result title='Constructed Wetland' description={`The tool recommends CW as the sole intervention when:\n• Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
 
-            images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
+              images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
             <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
           </div>
 
@@ -745,22 +742,38 @@ Calculated area requirements for CW are below 25% of the lake area`}
         <div className={`${(!showcw && showfi) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col`}>
           <p >Only FI is  required</p>
           <div className='flex flex-col lg:flex-row'>
-            <Result title='Floating island' description='' images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
+            <Result title='Floating island' description={`The tool recommends FI as the sole intervention when:\n
+             • Area for the deployment of CW is not available. \n 
+             • The estimated area required for the deployment of FIs is below 25 % of the lake area.`}
+              images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
             <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
           </div>
         </div>
 
         <div className={`${(showcw && showfi) ? 'flex flex-col' : 'hidden'}  justify-center items-center flex-col`}>
-          <p  >Combination of CW and FI is required</p>
+          <p className='w-full text-center text-xl' >Combination of CW and FI is required</p>
+          <p>The tool recommends a combined approach when:
+            <br></br>CW alone cannot achieve the required nutrient removal
+            <br></br>Additional treatment is needed to supplement the CW
+            <br></br>The combined area requirements are below 25% of the lake area
+          </p>
           <div className='flex flex-col lg:flex-row'>
-            <Result title='Constructed Wetland' description='' images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
-            <Result title='Floating island' description='' images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
+            <Result title='Constructed Wetland' description={`Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
+
+              images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
+            <Result title='Floating island' description={`• Area for the deployment of CW is not available. \n 
+             • The estimated area required for the deployment of FIs is below 25 % of the lake area.`} 
+            images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
             <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
           </div>
         </div>
 
         <div className={`${((!showcw && !showfi)) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col `}>
           <p >NbS is not feasible</p>
+          <p>When the pollutant load inflow to the lake is significantly higher than the load that could be handled by any of the above scenarios, the tool indicates non-viability of NbS deployment at the lake. This scenario specifically occurs when:
+            <br></br>• Treatment requirements cannot be met within the spatial constraints
+            <br></br>• The required area for CW and/or FI exceeds 25% of the lake area
+          </p>
           <div className='flex flex-col lg:flex-row'>
             {/* <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} /> */}
           </div>

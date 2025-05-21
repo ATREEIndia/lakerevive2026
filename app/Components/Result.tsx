@@ -18,10 +18,10 @@ type resultprobs={
 
 const Result = ({title, area='0', percent, images, btn_link, description}:resultprobs) => {
     return (
-        <div className='flex gap-2 flex-col lg:flex-row px-2 h-[720px] '>
+        <div className='flex gap-2 flex-col lg:flex-row px-2  '>
              <div className='border-2 p-4 shadow-2xl border-gray-200 rounded-2xl flex flex-col'>
                 <div className='w-full overflow-clip'>
-                    <div className=' w-[500px]  px-4'>
+                    <div className=' w-[400px] sm:w-[750px] lg:w-[520px]  px-4'>
                         <Slider images={images}></Slider>
                     </div>
                     
@@ -34,7 +34,7 @@ const Result = ({title, area='0', percent, images, btn_link, description}:result
                 <h1 className='w-full  text-center mt-2 font-medium text-lg'>Why this suggestion?</h1> 
                 </div>
                 <div className={`${area?.length>1?'flex':'mt-5'} px-4 py-2`}>
-                   <p>{description}</p> 
+                   <p className='whitespace-pre-line'>{description}</p> 
                 </div>
                 
                
