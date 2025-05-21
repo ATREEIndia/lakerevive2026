@@ -33,4 +33,4 @@ export const CW_imgs=[ cw_img1,cw_img2,cw_img3,cw_img4 ]
 export const vegitation_imgs=[vg_img1,vg_img2,vg_img3,vg_img4]
 
 
-export const shorelline_know_more='https://drive.google.com/file/d/1ED_JNrejP6SE19MRDc77SKrBYQop2Oz0/view?usp=sharing';
+export const shoreline_know_more='https://drive.google.com/file/d/1ED_JNrejP6SE19MRDc77SKrBYQop2Oz0/view?usp=sharing';

@@ -165,6 +165,11 @@ const page = () => {
       let Result_area_req_fi;
       let Result_percent_area_of_lake_covered_by_fi = 0;
 
+
+      //revere this
+
+      
+
       if (isinflowavilable && !isareaavaiable) {
         console.log('on f1 condition')
         //fi condition 1
@@ -206,7 +211,7 @@ const page = () => {
         return
       }
 
-      if (!isinflowavilable && !isareaavaiable) {
+      if (!isinflowavilable ) {
         //fi condition 2
         console.log('on f2 condition')
         const volume = (Input_lakedepth * Input_lakearea) * 1000
@@ -310,8 +315,8 @@ const page = () => {
       //--------------Overall result------------//
       const Result_percent_total_area_covered = (Result_percent_area_of_lake_covered_by_fi + Result_percent_area_covered_bt_CW);
       Remarks = Result_percent_total_area_covered > 25 ? 'NbS Not sufficient' : "NbS is sufficient";
-      Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Result_area_of_CW.toFixed(2))
-      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Result_percent_area_covered_bt_CW.toFixed(2))
+      Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Result_area_of_CW.toFixed(0))  //round up
+      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Result_percent_area_covered_bt_CW.toFixed(1))
        
        if(Result_percent_total_area_covered > 25 ){
         Setshowfi(false);
