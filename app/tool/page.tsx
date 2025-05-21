@@ -664,7 +664,7 @@ const page = () => {
 
               <Inputitem title={'Total phosphorus (TP) level (mg/L) - Inlake'} value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp}></Inputitem>
 
-              <Inputitem title={'Secchi Depth (m)'} value={Input_secchidepth > 0 ? Input_secchidepth : ''} updatefunction={updatesechidepth}></Inputitem>
+              <Inputitem title={'Secchi depth (m)'} value={Input_secchidepth > 0 ? Input_secchidepth : ''} updatefunction={updatesechidepth}></Inputitem>
 
             </div>
 
