@@ -17,7 +17,7 @@ import Head from 'next/head'
 import { Shojumaru } from 'next/font/google'
 import Result from '../Components/Result'
 
-import { Fi_imgs, CW_imgs, vegitation_imgs } from '../Constants'
+import { Fi_imgs, CW_imgs, vegitation_imgs, shoreline_know_more } from '../Constants'
 
 
 const page = () => {
@@ -198,8 +198,8 @@ const page = () => {
         Result_area_req_fi = area_required_fi;
         Result_percent_area_of_lake_covered_by_fi = area_required_fi < _25_percent_of_lake_area ? (area_required_fi / Input_lakearea) * 100 : 0;
 
-        Set_result_fi_area(Result_area_req_fi.toFixed(2))
-        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
+      Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
+        Set_result_fi_percent(Math.ceil(Result_percent_area_of_lake_covered_by_fi).toFixed(1))
         Setshowfi(true);
         Setshowcw(false);
         Setshowresult(true)
@@ -244,8 +244,8 @@ const page = () => {
         Result_area_req_fi = area_req_by_fi;
         Result_percent_area_of_lake_covered_by_fi = area_req_by_fi < _25_percent_lake_area ? (area_req_by_fi / Input_lakearea) * 100 : 0;
 
-        Set_result_fi_area(Result_area_req_fi.toFixed(2))
-        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
+        Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
+        Set_result_fi_percent(Math.ceil(Result_percent_area_of_lake_covered_by_fi).toFixed(1))
         Setshowfi(true);
         Setshowcw(false);
         Setshowresult(true)
@@ -305,8 +305,8 @@ const page = () => {
         //----------result-----------------------//
         Result_area_req_fi = area_required_fi;
         Result_percent_area_of_lake_covered_by_fi = percent_of_area_covered_by_fi;
-        Set_result_fi_area(Result_area_req_fi.toFixed(2))
-        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(2))
+        Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
+        Set_result_fi_percent(Math.ceil(Result_percent_area_of_lake_covered_by_fi).toFixed(1))
         Setshowfi(true);
         Setshowresult(true);
 
@@ -315,8 +315,8 @@ const page = () => {
       //--------------Overall result------------//
       const Result_percent_total_area_covered = (Result_percent_area_of_lake_covered_by_fi + Result_percent_area_covered_bt_CW);
       Remarks = Result_percent_total_area_covered > 25 ? 'NbS Not sufficient' : "NbS is sufficient";
-      Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Result_area_of_CW.toFixed(0))  //round up
-      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Result_percent_area_covered_bt_CW.toFixed(1))
+      Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Math.ceil( Result_area_of_CW).toFixed(0))  //round up
+      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Math.ceil( Result_percent_area_covered_bt_CW).toFixed(1))
 
       if (Result_percent_total_area_covered > 25) {
         Setshowfi(false);
@@ -734,7 +734,7 @@ const page = () => {
             <Result title='Constructed Wetland' description={`The tool recommends CW as the sole intervention when:\n• Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
 
               images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
-            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
+            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={shoreline_know_more} />
           </div>
 
         </div>
@@ -746,7 +746,7 @@ const page = () => {
              • Area for the deployment of CW is not available. \n 
              • The estimated area required for the deployment of FIs is below 25 % of the lake area.`}
               images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
-            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
+            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={shoreline_know_more} />
           </div>
         </div>
 
@@ -764,7 +764,7 @@ const page = () => {
             <Result title='Floating island' description={`• Area for the deployment of CW is not available. \n 
              • The estimated area required for the deployment of FIs is below 25 % of the lake area.`} 
             images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
-            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} />
+            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={shoreline_know_more} />
           </div>
         </div>
 
