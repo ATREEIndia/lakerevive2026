@@ -65,8 +65,8 @@ const page = () => {
   const [result_fi_percent, Set_result_fi_percent] = useState('0')
   const [result_CW_percent, Set_result_CW_percent] = useState('0')
   const [showfi, Setshowfi] = useState(false);
-  const [showcw, Setshowcw] = useState(true);
-  const [showresult, Setshowresult] = useState(true);
+  const [showcw, Setshowcw] = useState(false);
+  const [showresult, Setshowresult] = useState(false);
   const [showsingleslider, Setshowsingleslider] = useState(false);
   const [single_slider_imgs, Setsingle_slider_imgs] = useState<any[]>([]);
 
@@ -601,7 +601,7 @@ const page = () => {
 
   return (
     <div className='w-full relative'>
-      <Navbar></Navbar>
+      <Navbar currentpage='tool'></Navbar>
 
       <Banner></Banner>
       <div className='w-full p-4 flex flex-col gap-2 sm:flex-row justify-between bg-[#fffdfc] '>
@@ -802,7 +802,7 @@ const page = () => {
 
           </div>
           <div className='flex gap-4 flex-col lg:flex-row mt-4'>
-            
+
             <Result
               title='Floating island'
               description={`• Area for the deployment of CW is not available.

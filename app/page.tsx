@@ -7,6 +7,7 @@ import SubHeading from "./Components/SubHeading";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import website_amin from "@/public/website-working.json";
+import Navbar from "./Components/Navbar";
 
 // Dynamically import Lottie with SSR disabled
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -20,6 +21,7 @@ export default function Home() {
 
   return (
     <main>
+      <Navbar currentpage="home"></Navbar>
       <div className="flex flex-col w-full p-8 justify-center items-center">
         <div className="w-[300px]">
           {isClient && (
