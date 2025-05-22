@@ -56,7 +56,7 @@ const Navbar = ({ currentpage }: navprobs) => {
                 <div className=' gap-20 justify-between mr-[20%] hidden lg:flex'>
                     {navlink.map((link, index) => {
                         return <Link key={index} href={link.href}>
-                            <p className={`${currentpage === link.label ? "border-b-amber-300 border-b-2" : "flex"} text-white text-lg hover:border-b-white hover:border-b-2`}>{link.label}</p>
+                            <p className={`${currentpage === link.label ? "border-b-white border-b-2" : "flex"} text-white text-lg hover:border-b-white hover:border-b-2`}>{link.label}</p>
                         </Link>
                     })}
                 </div>

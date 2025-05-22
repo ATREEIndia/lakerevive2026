@@ -20,7 +20,7 @@ import vg_img5 from '@/public/waterhyacinth.jpg'
 
 export const navlink=[
     { href: "/", label: "Home" },
-    { href: "/", label: "Tool" },
+    { href: "/tool", label: "Tool" },
     { href: "/", label: "NbS" },
     { href: "/", label: "Lake health index" },
     { href: "/", label: "Resources" },

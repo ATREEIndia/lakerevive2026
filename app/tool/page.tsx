@@ -601,7 +601,7 @@ const page = () => {
 
   return (
     <div className='w-full relative'>
-      <Navbar currentpage='tool'></Navbar>
+      <Navbar currentpage='Tool'></Navbar>
 
       <Banner></Banner>
       <div className='w-full p-4 flex flex-col gap-2 sm:flex-row justify-between bg-[#fffdfc] '>
