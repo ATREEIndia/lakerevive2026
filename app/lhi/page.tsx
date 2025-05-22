@@ -113,7 +113,7 @@ const page = () => {
                     <button
                         className='px-10 cursor-pointer py-3 bg-[#1e8989] text-white font-semibold rounded-xl shadow-md hover:bg-[#60adad] active:scale-95 transition transform duration-150'
                     >
-                        Downlaod the file
+                        Download the file
                     </button>
                 </Link>
             </div>
