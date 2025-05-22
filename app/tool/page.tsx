@@ -18,6 +18,8 @@ import { Shojumaru } from 'next/font/google'
 import Result from '../Components/Result'
 
 import { Fi_imgs, CW_imgs, vegitation_imgs, shoreline_know_more } from '../Constants'
+import SingleSlider from '../Components/SingleSlider'
+import Navbar from '../Components/Navbar'
 
 
 const page = () => {
@@ -63,8 +65,16 @@ const page = () => {
   const [result_fi_percent, Set_result_fi_percent] = useState('0')
   const [result_CW_percent, Set_result_CW_percent] = useState('0')
   const [showfi, Setshowfi] = useState(false);
-  const [showcw, Setshowcw] = useState(false);
-  const [showresult, Setshowresult] = useState(false);
+  const [showcw, Setshowcw] = useState(true);
+  const [showresult, Setshowresult] = useState(true);
+  const [showsingleslider, Setshowsingleslider] = useState(false);
+  const [single_slider_imgs, Setsingle_slider_imgs] = useState<any[]>([]);
+
+  function handle_singleslide(images: any[]) {
+    Setsingle_slider_imgs(images)
+
+    Setshowsingleslider(!showsingleslider);
+  }
 
   function updateLakeName(e: React.ChangeEvent<HTMLInputElement>) {
     const val = (e.target.value);
@@ -129,7 +139,7 @@ const page = () => {
 
 
 
-
+  // checking all valid files are filled
   function isfieldsvalid() {
 
     if (Input_lakename.length < 1) {
@@ -144,6 +154,19 @@ const page = () => {
 
     if (Input_lakearea < 1 || Input_lakedepth < 0.01 || Input_laketp < 0.01) {
       alert('Input valid data');
+      return false;
+    }
+
+    if (Input_inflowrate < 1 && isinflowavilable) {
+      alert('Input inflow data or click on No dry-weather inflow to skip the field');
+      return false;
+    }
+    if (Input_feasible_depth < 1 && isdepthAvaiable) {
+      alert('Input Feasible depth or click on Feasible depth not available to skip the field');
+      return false;
+    }
+    if (Input_cwArea < 1 && isareaavaiable) {
+      alert('Input Area available or click on Area not available to skip the field');
       return false;
     }
     return true;
@@ -164,9 +187,6 @@ const page = () => {
     if (isfieldsvalid()) {
       let Result_area_req_fi;
       let Result_percent_area_of_lake_covered_by_fi = 0;
-
-
-      //revere this
 
 
 
@@ -198,7 +218,7 @@ const page = () => {
         Result_area_req_fi = area_required_fi;
         Result_percent_area_of_lake_covered_by_fi = area_required_fi < _25_percent_of_lake_area ? (area_required_fi / Input_lakearea) * 100 : 0;
 
-      Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
+        Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
         Set_result_fi_percent(Math.ceil(Result_percent_area_of_lake_covered_by_fi).toFixed(1))
         Setshowfi(true);
         Setshowcw(false);
@@ -315,8 +335,8 @@ const page = () => {
       //--------------Overall result------------//
       const Result_percent_total_area_covered = (Result_percent_area_of_lake_covered_by_fi + Result_percent_area_covered_bt_CW);
       Remarks = Result_percent_total_area_covered > 25 ? 'NbS Not sufficient' : "NbS is sufficient";
-      Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Math.ceil( Result_area_of_CW).toFixed(0))  //round up
-      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Math.ceil( Result_percent_area_covered_bt_CW).toFixed(1))
+      Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Math.ceil(Result_area_of_CW).toFixed(0))  //round up
+      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Math.ceil(Result_percent_area_covered_bt_CW).toFixed(1))
 
       if (Result_percent_total_area_covered > 25) {
         Setshowfi(false);
@@ -580,7 +600,8 @@ const page = () => {
 
 
   return (
-    <div className='w-full'>
+    <div className='w-full relative'>
+      <Navbar></Navbar>
 
       <Banner></Banner>
       <div className='w-full p-4 flex flex-col gap-2 sm:flex-row justify-between bg-[#fffdfc] '>
@@ -622,12 +643,12 @@ const page = () => {
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
-                    <p className='p-8'> If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal constructed wetland (CW) is considered for calculations. If not, free-water surface CW would be used.
+                    <p className='p-8'> If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal constructed wetland (CW) is considered for calculations. If not, free-water surface CW would be considered.
                     </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(false) }}>x</p>
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(true) }}>Note</p>
-                  <Inputitem title={'Feasible depth -  Constructed wetland (m)'} disable_status={!isdepthAvaiable} value={Input_feasible_depth > 0 ? Input_feasible_depth : ""} updatefunction={updatefeasibledepth}></Inputitem>
+                  <Inputitem title={'Feasible depth -  Constructed wetland (m)'} disable_status={!isdepthAvaiable} value={Input_feasible_depth >= 0.5 ? Input_feasible_depth : ""} updatefunction={updatefeasibledepth}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_feasible_depth > 0 ? 'hidden' : 'flex'}`}>
                   <p className='text-blue-600 cursor-pointer' onClick={() => Setisdepthvailabe(!isdepthAvaiable)} >{isdepthAvaiable ? 'Feasible depth not available' : 'Feasible depth available'}</p>
@@ -650,8 +671,11 @@ const page = () => {
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full gap-6`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isinlethoveropen ? 'flex' : 'hidden'}`}>
-                    <p className='p-8'>Note: For Multiple inlets, enter the details individually to determine intervention for each inlet. Incase you wish to combine multiple
+                    {/* <p className='p-8'>Note: For Multiple inlets, enter the details individually to determine intervention for each inlet. Incase you wish to combine multiple
                       inltes you may consider weighted averages for the inlets using the formula; <br></br> ( (Q₁ × C₁ + Q₂ × C₂ + … + Qₙ × Cₙ) ÷ (Q₁ + Q₂ + … + Qₙ) ) <br></br> where  Q is inflow rate of inlets and C is Concentration.
+                    </p> */}
+                    <p className='p-8'>For multiple inlets, enter the details individually to determine intervention for each inlet. If multiple inlets are to be combined, the inflow rate for the combined inlets will be the sum of individual inflow rates. For TP concentration of combined inlets, consider weighted averages using the formula; ((Q₁ × C₁ + Q₂ × C₂ + … + Qₙ × Cₙ) ÷ (Q₁ + Q₂ + … + Qₙ)) <br></br> where Qᵢ is inflow rate of inlets and Cᵢ is TP concentration of inlets.
+
                     </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisinlethoveropne(false) }}>x</p>
                   </div>
@@ -660,7 +684,7 @@ const page = () => {
                   <Inputitem title={'Total phosphorus (TP) level (mg/L) - Inflow'} disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_inflowrate > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'No dry-weather inflow' : 'Dry-weather inflow Available'}</p>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'No dry-weather inflow' : 'Dry-weather inflow available'}</p>
                 </div>
               </div>
 
@@ -725,57 +749,155 @@ const page = () => {
 
       {/* Result section */}
       <div className={` ${showresult ? 'flex' : 'hidden'}  w-full  justify-center items-center  `}>
-        <>{console.log('showcw= ' + showcw)}</>
-        <>{console.log('showfi= ' + showfi)}</>
 
+        {/* Show only CW ---------------------------------------------------------------------------- */}
         <div className={`${(showcw && !showfi) ? 'flex flex-col ' : 'hidden'} justify-center items-center  `}>
-          <p >Only CW is required</p>
-          <div className='flex flex-col lg:flex-row'>
-            <Result title='Constructed Wetland' description={`The tool recommends CW as the sole intervention when:\n• Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
 
-              images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
-            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={shoreline_know_more} />
+          <p className='w-full text-center text-xl font-semibold' >Only CW is sufficient</p>
+          <div className='w-full flex justify-center items-center'>
+            <div className='mt-2'>
+              <p className='w-full text-start px-4 text-lg '>CW as the sole intervention is recommended when:
+                <br></br>• Sufficient area is available for CW implementation
+                <br></br>• CW alone can achieve the required nutrient removal
+                <br></br>• Calculated area requirements for CW are below 25% of the lake area
+
+
+              </p>
+            </div>
+
+          </div>
+          <div className='flex gap-4 flex-col lg:flex-row mt-4'>
+            <Result
+              title='Constructed Wetland'
+              description={`• Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
+              images={Fi_imgs}
+              btn_link={''}
+              percent={`${result_CW_percent} %`}
+              area={`${result_CW_area} m²`} />
+
+            <Result
+              title='Shoreline rehabilitation'
+              description='Shorelines are among the most ecologically productive areas on earth, playing a crucial role in maintaining the health of water bodies. Rehabilitation efforts focus on restoring native vegetation, stabilising soil, improving habitat quality, and enhancing ecosystem services.'
+              images={vegitation_imgs}
+              btn_link={shoreline_know_more}
+              handlesingleslide={() => handle_singleslide(vegitation_imgs)} />
           </div>
 
         </div>
 
+
+        {/* show only fi -------------------------------------------------------------------------------------*/}
         <div className={`${(!showcw && showfi) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col`}>
-          <p >Only FI is  required</p>
-          <div className='flex flex-col lg:flex-row'>
-            <Result title='Floating island' description={`The tool recommends FI as the sole intervention when:\n
-             • Area for the deployment of CW is not available. \n 
+          <p className='w-full text-center text-xl font-semibold' >Only FI is sufficient</p>
+          <div className='w-full flex justify-center items-center'>
+            <div className='mt-2'>
+              <p className='w-full text-start px-4 text-lg'>FI as the sole intervention is recommended when:
+                <br></br>Sufficient area is available for CW implementation
+                <br></br>• CW alone can achieve the required nutrient removal
+                <br></br>• Calculated area requirements for CW are below 25% of the lake area
+
+
+              </p>
+            </div>
+
+          </div>
+          <div className='flex gap-4 flex-col lg:flex-row mt-4'>
+            
+            <Result
+              title='Floating island'
+              description={`• Area for the deployment of CW is not available.
              • The estimated area required for the deployment of FIs is below 25 % of the lake area.`}
-              images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
-            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={shoreline_know_more} />
+              images={Fi_imgs}
+              btn_link={''}
+              percent={`${result_fi_percent} %`}
+              area={`${result_fi_area} m²`} />
+
+            <Result
+              title='Shoreline rehabilitation'
+              description='Shorelines are among the most ecologically productive areas on earth, playing a crucial role in maintaining the health of water bodies. Rehabilitation efforts focus on restoring native vegetation, stabilising soil, improving habitat quality, and enhancing ecosystem services.'
+              images={vegitation_imgs}
+              btn_link={shoreline_know_more}
+              handlesingleslide={() => handle_singleslide(vegitation_imgs)} />
           </div>
         </div>
 
+
+        {/* show all 3 --------------------------------------------------------------------------------------------*/}
         <div className={`${(showcw && showfi) ? 'flex flex-col' : 'hidden'}  justify-center items-center flex-col`}>
-          <p className='w-full text-center text-xl' >Combination of CW and FI is required</p>
-          <p>The tool recommends a combined approach when:
-            <br></br>CW alone cannot achieve the required nutrient removal
-            <br></br>Additional treatment is needed to supplement the CW
-            <br></br>The combined area requirements are below 25% of the lake area
-          </p>
-          <div className='flex flex-col lg:flex-row'>
-            <Result title='Constructed Wetland' description={`Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
+          <div className='w-full p-2 flex flex-col justify-center'>
+            <p className='w-full text-center text-xl font-semibold' >Combination of CW and FI is required</p>
+            <div className='w-full flex justify-center items-center'>
+              <div className='mt-2'>
+                <p className='w-full text-start px-4 text-lg'>Combined approach is recommended when:
+                  <br></br>• CW alone cannot achieve the required nutrient removal
+                  <br></br>• Additional treatment is needed to supplement the CW
+                  <br></br>• The combined area requirements are below 25% of the lake area
+                </p>
+              </div>
 
-              images={Fi_imgs} btn_link={''} percent={`${result_CW_percent} %`} area={`${result_CW_area} m²`} />
-            <Result title='Floating island' description={`• Area for the deployment of CW is not available. \n 
-             • The estimated area required for the deployment of FIs is below 25 % of the lake area.`} 
-            images={Fi_imgs} btn_link={''} percent={`${result_fi_percent} %`} area={`${result_fi_area} m²`} />
-            <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={shoreline_know_more} />
+            </div>
+
+
+          </div>
+
+          <div className='flex flex-col lg:flex-row gap-4 mt-4 px-2'>
+            <Result
+              title='Constructed Wetland'
+              description={``}
+              images={CW_imgs}
+              btn_link={''}
+              percent={`${result_CW_percent} %`}
+              area={`${result_CW_area} m²`}
+              handlesingleslide={() => handle_singleslide(CW_imgs)} />
+
+            <Result
+              title='Floating island'
+              description={``}
+              images={Fi_imgs}
+              btn_link={''}
+              percent={`${result_fi_percent} %`}
+              area={`${result_fi_area} m²`}
+              handlesingleslide={() => handle_singleslide(Fi_imgs)} />
+
+            <Result
+              title='Shoreline rehabilitation'
+              description='Shorelines are among the most ecologically productive areas on earth, playing a crucial role in maintaining the health of water bodies. Rehabilitation efforts focus on restoring native vegetation, stabilising soil, improving habitat quality, and enhancing ecosystem services.'
+              images={vegitation_imgs}
+              btn_link={shoreline_know_more}
+              handlesingleslide={() => handle_singleslide(vegitation_imgs)} />
+
           </div>
         </div>
 
+
+        {/* Show none --------------------------------------------------------------------------------------- */}
         <div className={`${((!showcw && !showfi)) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col `}>
-          <p >NbS is not feasible</p>
-          <p>When the pollutant load inflow to the lake is significantly higher than the load that could be handled by any of the above scenarios, the tool indicates non-viability of NbS deployment at the lake. This scenario specifically occurs when:
-            <br></br>• Treatment requirements cannot be met within the spatial constraints
-            <br></br>• The required area for CW and/or FI exceeds 25% of the lake area
-          </p>
-          <div className='flex flex-col lg:flex-row'>
-            {/* <Result title='Shoreline Vegitation' description='Descripiion for shoreline vegitation' images={vegitation_imgs} btn_link={''} /> */}
+
+          <p className='w-full text-center text-xl font-semibold' >NbS is not feasible</p>
+          <div className='w-full flex justify-center items-center'>
+            <div className='mt-2'>
+              <p className='w-full text-start px-4 lg:px-20 text-lg'>When the pollutant load inflow to the lake is significantly higher than the load that could be handled by any of the above scenarios, the tool indicates non-viability of NbS deployment at the lake. This scenario specifically occurs when:
+                <br></br>• Treatment requirements cannot be met within the spatial constraints
+                <br></br>• The required area for CW and/or FI exceeds 25% of the lake area.
+              </p>
+            </div>
+
+          </div>
+
+          <div className='flex flex-col lg:flex-row h-2 mt-5'>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Image slider overlay */}
+      <div className={`${showsingleslider ? 'lg:absolute' : 'hidden'} absolute top-0 left-0 w-full h-full `}>
+
+        <div className={`${showsingleslider ? 'lg:flex' : 'hidden'} relative w-full h-full flex-col-reverse`}>
+
+          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-90 z-[1000] cursor-pointer " onClick={() => handle_singleslide(single_slider_imgs)} />
+          <div className='w-full flex justify-center items-center mt-20 z-[5000]' >
+            <SingleSlider images={single_slider_imgs} handlesingleslide={() => handle_singleslide(single_slider_imgs)}></SingleSlider>
           </div>
         </div>
       </div>
