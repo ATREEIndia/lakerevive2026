@@ -1,12 +1,12 @@
 import React from 'react'
 
 type Textboxprobs={
-    Content: string,
+    Content: React.ReactNode;
     customstyle?: string
 }
 const Textbox = ({Content, customstyle}:Textboxprobs) => {
   return (
-    <div className={`text-gray-700 font-normal flex justify-left  lg:text-lg ${customstyle}`}>{Content}
+    <div className={`text-gray-700 font-normal flex justify-left  lg:text-lg whitespace-pre-line ${customstyle}`}>{Content}
       
     </div>
   )

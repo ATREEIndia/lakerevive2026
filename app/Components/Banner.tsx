@@ -9,7 +9,7 @@ type bannerprobs={
 
 const Banner = ({title, subtitle}:bannerprobs) => {
   return (
-    <div className='relative w-full sm:h-[400px] overflow-clip'>
+    <div className='relative w-full sm:h-[500px] overflow-clip'>
       {/* overlay */}
       <div className='  absolute top-0 left-0 w-full h-full bg-green-700 opacity-55'></div>
       <Image src={banner_img} alt="" ></Image>

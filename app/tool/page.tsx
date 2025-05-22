@@ -876,9 +876,10 @@ const page = () => {
           <p className='w-full text-center text-xl font-semibold' >NbS is not feasible</p>
           <div className='w-full flex justify-center items-center'>
             <div className='mt-2'>
-              <p className='w-full text-start px-4 lg:px-20 text-lg'>When the pollutant load inflow to the lake is significantly higher than the load that could be handled by any of the above scenarios, the tool indicates non-viability of NbS deployment at the lake. This scenario specifically occurs when:
+              <p className='w-full text-start px-4 lg:px-20 text-lg'>The pollutant load inflow to the lake is significantly higher than the load that could be handled by constructed wetlands, floating islands or combination. This is because:
                 <br></br>• Treatment requirements cannot be met within the spatial constraints
                 <br></br>• The required area for CW and/or FI exceeds 25% of the lake area.
+
               </p>
             </div>
 
