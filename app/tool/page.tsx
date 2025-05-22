@@ -17,9 +17,14 @@ import Head from 'next/head'
 import { Shojumaru } from 'next/font/google'
 import Result from '../Components/Result'
 
+
 import { Fi_imgs, CW_imgs, vegitation_imgs, shoreline_know_more } from '../Constants'
 import SingleSlider from '../Components/SingleSlider'
 import Navbar from '../Components/Navbar'
+
+import cwandfi_img from '@/public/cw_fi.jpg'
+import cwonly_img from '@/public/cw_only.jpg'
+import fionly_img from '@/public/fi_only.jpg'
 
 
 const page = () => {
@@ -64,9 +69,9 @@ const page = () => {
   const [result_CW_area, Set_result_CW_area] = useState('0')
   const [result_fi_percent, Set_result_fi_percent] = useState('0')
   const [result_CW_percent, Set_result_CW_percent] = useState('0')
-  const [showfi, Setshowfi] = useState(false);
-  const [showcw, Setshowcw] = useState(false);
-  const [showresult, Setshowresult] = useState(false);
+  const [showfi, Setshowfi] = useState(true);
+  const [showcw, Setshowcw] = useState(true);
+  const [showresult, Setshowresult] = useState(true);
   const [showsingleslider, Setshowsingleslider] = useState(false);
   const [single_slider_imgs, Setsingle_slider_imgs] = useState<any[]>([]);
 
@@ -767,6 +772,17 @@ const page = () => {
             </div>
 
           </div>
+
+           {/* resulting image */}
+          <div className='relative w-[100%] h-[500px] flex justify-around overflow-clip mt-4 p-4'>
+             <Image 
+             className='object-cover'
+             fill
+             src={cwonly_img}
+             alt='cw and fi'></Image>
+          </div>
+
+
           <div className='flex gap-4 flex-col lg:flex-row mt-4'>
             <Result
               title='Constructed Wetland'
@@ -803,6 +819,17 @@ const page = () => {
             </div>
 
           </div>
+
+           {/* resulting image */}
+          <div className='relative w-[100%] h-[500px] flex justify-around overflow-clip mt-4 p-4'>
+             <Image 
+             className='object-cover'
+             fill
+             src={fionly_img}
+             alt='fi'></Image>
+          </div>
+
+
           <div className='flex gap-4 flex-col lg:flex-row mt-4'>
 
             <Result
@@ -843,6 +870,15 @@ const page = () => {
 
 
           </div>
+          {/* resulting image */}
+          <div className='relative w-[98%] h-[500px] flex justify-around overflow-clip px-8'>
+             <Image 
+             className='object-cover'
+             fill
+             src={cwandfi_img}
+             alt='cw and fi'></Image>
+          </div>
+        
 
           <div className='flex flex-col lg:flex-row gap-4 mt-4 px-2'>
             <Result
