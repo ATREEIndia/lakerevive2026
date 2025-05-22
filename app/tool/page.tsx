@@ -219,7 +219,7 @@ const page = () => {
         Result_percent_area_of_lake_covered_by_fi = area_required_fi < _25_percent_of_lake_area ? (area_required_fi / Input_lakearea) * 100 : 0;
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
-        Set_result_fi_percent(Math.ceil(Result_percent_area_of_lake_covered_by_fi).toFixed(1))
+        Set_result_fi_percent (Result_percent_area_of_lake_covered_by_fi.toFixed(1))
         Setshowfi(true);
         Setshowcw(false);
         Setshowresult(true)
@@ -265,7 +265,7 @@ const page = () => {
         Result_percent_area_of_lake_covered_by_fi = area_req_by_fi < _25_percent_lake_area ? (area_req_by_fi / Input_lakearea) * 100 : 0;
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
-        Set_result_fi_percent(Math.ceil(Result_percent_area_of_lake_covered_by_fi).toFixed(1))
+        Set_result_fi_percent (Result_percent_area_of_lake_covered_by_fi.toFixed(1))
         Setshowfi(true);
         Setshowcw(false);
         Setshowresult(true)
@@ -326,7 +326,7 @@ const page = () => {
         Result_area_req_fi = area_required_fi;
         Result_percent_area_of_lake_covered_by_fi = percent_of_area_covered_by_fi;
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
-        Set_result_fi_percent(Math.ceil(Result_percent_area_of_lake_covered_by_fi).toFixed(1))
+        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(1))
         Setshowfi(true);
         Setshowresult(true);
 
@@ -336,7 +336,7 @@ const page = () => {
       const Result_percent_total_area_covered = (Result_percent_area_of_lake_covered_by_fi + Result_percent_area_covered_bt_CW);
       Remarks = Result_percent_total_area_covered > 25 ? 'NbS Not sufficient' : "NbS is sufficient";
       Set_result_CW_area(isNaN(Result_area_of_CW) ? '0' : Math.ceil(Result_area_of_CW).toFixed(0))  //round up
-      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Math.ceil(Result_percent_area_covered_bt_CW).toFixed(1))
+      Set_result_CW_percent(isNaN(Result_percent_area_covered_bt_CW) ? '0' : Result_percent_area_covered_bt_CW.toFixed(1))
 
       if (Result_percent_total_area_covered > 25) {
         Setshowfi(false);
