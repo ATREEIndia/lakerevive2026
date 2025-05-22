@@ -72,6 +72,7 @@ const page = () => {
 
   function handle_singleslide(images: any[]) {
     Setsingle_slider_imgs(images)
+    console.log("handle_singleslide triggred")
 
     Setshowsingleslider(!showsingleslider);
   }
@@ -773,7 +774,8 @@ const page = () => {
               images={Fi_imgs}
               btn_link={''}
               percent={`${result_CW_percent} %`}
-              area={`${result_CW_area} m²`} />
+              area={`${result_CW_area} m²`}
+              handlesingleslide={() => handle_singleslide(CW_imgs)}  />
 
             <Result
               title='Shoreline rehabilitation'
@@ -810,7 +812,8 @@ const page = () => {
               images={Fi_imgs}
               btn_link={''}
               percent={`${result_fi_percent} %`}
-              area={`${result_fi_area} m²`} />
+              area={`${result_fi_area} m²`} 
+               handlesingleslide={() => handle_singleslide(Fi_imgs)} />
 
             <Result
               title='Shoreline rehabilitation'
@@ -818,6 +821,7 @@ const page = () => {
               images={vegitation_imgs}
               btn_link={shoreline_know_more}
               handlesingleslide={() => handle_singleslide(vegitation_imgs)} />
+              
           </div>
         </div>
 
@@ -892,9 +896,9 @@ const page = () => {
       </div>
 
       {/* Image slider overlay */}
-      <div className={`${showsingleslider ? 'lg:absolute' : 'hidden'} absolute top-0 left-0 w-full h-full `}>
+      <div className={`${showsingleslider ? 'absolute' : 'hidden'}  top-0 left-0 w-full h-full `}>
 
-        <div className={`${showsingleslider ? 'lg:flex' : 'hidden'} relative w-full h-full flex-col-reverse`}>
+        <div className={`${showsingleslider ? 'flex' : 'hidden'} relative w-full h-full flex-col-reverse`}>
 
           <div className="absolute top-0 left-0 w-full h-full bg-black opacity-90 z-[1000] cursor-pointer " onClick={() => handle_singleslide(single_slider_imgs)} />
           <div className='w-full flex justify-center items-center mt-20 z-[5000]' >

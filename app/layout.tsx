@@ -25,16 +25,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${getpoppins.className} antialiased`}
+      <body 
+        className={`${geistSans.variable} ${getpoppins.className} antialiased  `}
       >
-        {children}  
-        <div className="mt-5">
-<Footer></Footer>
-        </div>
+        {children}
+
+         <div className=" flex w-full h-20 flex-col-reverse mt-10 ">
+          <Footer />
+         </div>
         
-      </body>
     
+
+      </body>
+
     </html>
   );
 }
