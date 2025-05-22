@@ -1,8 +1,21 @@
+import Image from 'next/image'
 import React from 'react'
+import banner_img from '@/public/banner_img.jpg'
 
-const Banner = () => {
+type bannerprobs={
+  title?:string;
+  subtitle?:string
+}
+
+const Banner = ({title, subtitle}:bannerprobs) => {
   return (
-    <div className='w-full h-[300px] bg-green-600'>
+    <div className='relative w-full sm:h-[400px] overflow-clip'>
+      {/* overlay */}
+      <div className='  absolute top-0 left-0 w-full h-full bg-green-700 opacity-55'></div>
+      <Image src={banner_img} alt="" ></Image>
+      <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center'>
+        <h1 className='text-5xl font-semibold text-white'>{title}</h1>
+      </div>
       
     </div>
   )

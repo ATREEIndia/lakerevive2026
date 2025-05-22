@@ -161,7 +161,7 @@ const page = () => {
       alert('Input inflow data or click on No dry-weather inflow to skip the field');
       return false;
     }
-    if (Input_feasible_depth < 1 && isdepthAvaiable) {
+    if (Input_feasible_depth < .5 && isdepthAvaiable) {
       alert('Input Feasible depth or click on Feasible depth not available to skip the field');
       return false;
     }
@@ -603,7 +603,7 @@ const page = () => {
     <div className='w-full relative'>
       <Navbar currentpage='Tool'></Navbar>
 
-      <Banner></Banner>
+      <Banner title=''></Banner>
       <div className='w-full p-4 flex flex-col gap-2 sm:flex-row justify-between bg-[#fffdfc] '>
 
         {/* conatiner left */}
@@ -706,25 +706,25 @@ const page = () => {
 
         {/* container right */}
         <div className=' lg:w-[60%] w-full lg:items-center flex flex-col sm:pt-2 pt-8 '>
-          <Heading text='What do You Observe'></Heading>
-          <SubHeading text='Tell us what did you see'></SubHeading>
+          <Heading text='What do You Observe?'></Heading>
+          <SubHeading text='Tell us what did you see in your lakes'></SubHeading>
           <div className='w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-1 lg:px-4'>
 
             <ObservationsTab title='Fish kills'
-              explanation='Did you observe any dead fish floating on the surface or gathering near the shore.'
+              explanation='Have you seen any dead fish floating on the surface or gathering near the shore?'
               image={deadfishimage}></ObservationsTab>
 
             <ObservationsTab title='Algal bloom'
-              explanation=' Seen green or coloured patches spreading across the lake? '
+              explanation=' Have you observed green or coloured patches spreading across the lake? '
               image={algalbloomimage}></ObservationsTab>
 
-            <ObservationsTab title='Sewage Inflow or Bad Odour'
-              explanation='Have you observed any strong, unpleasant smells around the lake, or seen pipes or drains discharging into it? '
+            <ObservationsTab title='Sewage inflow or bad odour'
+              explanation='Have you felt any strong, unpleasant smell around the lake, or seen pipes or drains discharging sewage into it? '
               image={swageimage}></ObservationsTab>
 
 
-            <ObservationsTab title='Floating Vegetation'
-              explanation='Have you noticed thick clusters of floating plants like water hyacinth or duckweed covering parts of the lake?'
+            <ObservationsTab title='Floating vegetation'
+              explanation='Have you noticed thick clusters of floating plants like water hyacinth or duckweed covering significant area of the lake?'
               image={waterhyacinthimage}></ObservationsTab>
           </div>
           <div className='w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 sm:gap-1 lg:px-4'>
