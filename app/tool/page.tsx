@@ -363,6 +363,12 @@ const page = () => {
 
 
     };
+    useEffect(()=>{
+      if(showresult){
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+
+    },[showresult])
   }
 
 
