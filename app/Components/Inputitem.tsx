@@ -1,7 +1,7 @@
 import React from 'react'
 
 type inputprams={
-    title:string,
+    title:React.ReactNode,
     updatefunction:(m:any)=>void,
     value?:any,
     type?:string,

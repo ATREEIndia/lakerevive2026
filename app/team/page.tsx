@@ -35,7 +35,7 @@ const page = () => {
                 })}
             </div>
              <div className='w-full' >
-          <Textbox Content='Accnoledgement for the water lab team'></Textbox>
+          <Textbox Content='Acknowledgment for the water lab team'></Textbox>
         </div>
 
 

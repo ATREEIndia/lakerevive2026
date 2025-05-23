@@ -225,7 +225,7 @@ const page = () => {
         Result_percent_area_of_lake_covered_by_fi = area_required_fi < _25_percent_of_lake_area ? (area_required_fi / Input_lakearea) * 100 : 0;
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
-        Set_result_fi_percent (Result_percent_area_of_lake_covered_by_fi.toFixed(1))
+        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(1))
         Setshowfi(true);
         Setshowcw(false);
         Setshowresult(true)
@@ -271,7 +271,7 @@ const page = () => {
         Result_percent_area_of_lake_covered_by_fi = area_req_by_fi < _25_percent_lake_area ? (area_req_by_fi / Input_lakearea) * 100 : 0;
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
-        Set_result_fi_percent (Result_percent_area_of_lake_covered_by_fi.toFixed(1))
+        Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(1))
         Setshowfi(true);
         Setshowcw(false);
         Setshowresult(true)
@@ -363,14 +363,14 @@ const page = () => {
 
 
     };
-   
-  }
-   useEffect(()=>{
-      if(showresult){
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      }
 
-    },[showresult])
+  }
+  useEffect(() => {
+    if (showresult) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+  }, [showresult])
 
 
 
@@ -694,7 +694,12 @@ const page = () => {
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={() => { Setisinlethoveropne(true) }}>Note</p>
                   <Inputitem title={'Inflow rate (m³/day)'} disable_status={!isinflowavilable} value={Input_inflowrate > 0 ? Input_inflowrate : ''} updatefunction={updateInflowrate}></Inputitem>
-                  <Inputitem title={'Total phosphorus (TP) level (mg/L) - Inflow'} disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
+                  <Inputitem title={<> 
+                    Total phosphorus (TP) level (mg/L) – <b>Inflow</b>
+                  
+                  </>}
+
+                    disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_inflowrate > 0 ? 'hidden' : 'flex'}`}>
                   <p className='text-blue-600 cursor-pointer' onClick={() => Setisinflowavilable(!isinflowavilable)} >{isinflowavilable ? 'No dry-weather inflow' : 'Dry-weather inflow available'}</p>
@@ -704,7 +709,10 @@ const page = () => {
               {/* Total phospherous */}
 
 
-              <Inputitem title={'Total phosphorus (TP) level (mg/L) - Inlake'} value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp}></Inputitem>
+              <Inputitem title={<>
+                Total phosphorus (TP) level (mg/L) – <b>Inlake</b>
+              </>}
+                value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp}></Inputitem>
 
               <Inputitem title={'Secchi depth (m)'} value={Input_secchidepth > 0 ? Input_secchidepth : ''} updatefunction={updatesechidepth}></Inputitem>
 
@@ -780,13 +788,13 @@ const page = () => {
 
           </div>
 
-           {/* resulting image */}
+          {/* resulting image */}
           <div className='relative w-[100%] h-[500px] flex justify-around overflow-clip mt-4 p-4'>
-             <Image 
-             className='object-cover'
-             fill
-             src={cwonly_img}
-             alt='cw and fi'></Image>
+            <Image
+              className='object-cover'
+              fill
+              src={cwonly_img}
+              alt='cw and fi'></Image>
           </div>
 
 
@@ -798,7 +806,7 @@ const page = () => {
               btn_link={''}
               percent={`${result_CW_percent} %`}
               area={`${result_CW_area} m²`}
-              handlesingleslide={() => handle_singleslide(CW_imgs)}  />
+              handlesingleslide={() => handle_singleslide(CW_imgs)} />
 
             <Result
               title='Shoreline rehabilitation'
@@ -827,13 +835,13 @@ const page = () => {
 
           </div>
 
-           {/* resulting image */}
+          {/* resulting image */}
           <div className='relative w-[100%] h-[500px] flex justify-around overflow-clip mt-4 p-4'>
-             <Image 
-             className='object-cover'
-             fill
-             src={fionly_img}
-             alt='fi'></Image>
+            <Image
+              className='object-cover'
+              fill
+              src={fionly_img}
+              alt='fi'></Image>
           </div>
 
 
@@ -846,8 +854,8 @@ const page = () => {
               images={Fi_imgs}
               btn_link={''}
               percent={`${result_fi_percent} %`}
-              area={`${result_fi_area} m²`} 
-               handlesingleslide={() => handle_singleslide(Fi_imgs)} />
+              area={`${result_fi_area} m²`}
+              handlesingleslide={() => handle_singleslide(Fi_imgs)} />
 
             <Result
               title='Shoreline rehabilitation'
@@ -855,7 +863,7 @@ const page = () => {
               images={vegitation_imgs}
               btn_link={shoreline_know_more}
               handlesingleslide={() => handle_singleslide(vegitation_imgs)} />
-              
+
           </div>
         </div>
 
@@ -879,13 +887,13 @@ const page = () => {
           </div>
           {/* resulting image */}
           <div className='relative w-[98%] h-[500px] flex justify-around overflow-clip px-8'>
-             <Image 
-             className='object-cover'
-             fill
-             src={cwandfi_img}
-             alt='cw and fi'></Image>
+            <Image
+              className='object-cover'
+              fill
+              src={cwandfi_img}
+              alt='cw and fi'></Image>
           </div>
-        
+
 
           <div className='flex flex-col lg:flex-row gap-4 mt-4 px-2'>
             <Result
