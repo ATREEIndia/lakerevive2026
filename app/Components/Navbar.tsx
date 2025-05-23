@@ -41,7 +41,7 @@ const Navbar = ({ currentpage }: navprobs) => {
 
             <div className={`fixed z-1000 w-full h-20  justify-between items-center px-1.5 flex lg:pl-20 shadow-xl ${navbg ? "bg-green-600" : ""}`}> 
                 
-                <Link href={"/"}>
+                <Link href={"https://www.atree.org/"} target='_blank'>
                 <div className='flex items-center'>
                    
                     <Image src={logo} height={70} width={0} alt='logo' />
@@ -53,7 +53,7 @@ const Navbar = ({ currentpage }: navprobs) => {
 
                 </div>
                 </Link>
-                <div className=' gap-20 justify-between mr-[20%] hidden lg:flex'>
+                <div className=' gap-15 justify-between mr-[10%] hidden lg:flex'>
                     {navlink.map((link, index) => {
                         return <Link key={index} href={link.href}>
                             <p className={`${currentpage === link.label ? "border-b-white border-b-2" : "flex"} text-white text-lg hover:border-b-white hover:border-b-2`}>{link.label}</p>

@@ -14,7 +14,7 @@ import Homecard from "./Components/Homecard";
 import image_algal from '@/public/algalBloom.jpg'
 import image_userfriendly from '@/public/userfireldy.jpg'
 import image_climate_resilience from '@/public/climate-resillience.jpg'
-import image_secchi_disk from '@/public/secchi_disk.jpg'
+import image_policy from '@/public/policy.jpg'
 import HomeRowsection from "./Components/HomeRowsection";
 import Homesteps from "./Components/Homesteps";
 import image_urban_Lake_crisis from '@/public/ulc.jpg'
@@ -42,7 +42,7 @@ export default function Home() {
 
   return (
     <main>
-      <Navbar currentpage="home"></Navbar>
+      <Navbar currentpage="Home"></Navbar>
       <Banner title="LakeRevive" subtitle=""></Banner>
       <div className="flex flex-col gap-4 p-4 lg:px-8">
 
@@ -59,7 +59,7 @@ export default function Home() {
         <div className="w-full bg-gray-100 p-4 ">
           <Textbox Content="NOTE: This tool is applicable for lakes facing algal bloom, fish kill events, 
         spread of invasive species due to inflows of secondary treated domestic wastewater. If a lake is used as a 
-        flood-mitigation tool, the contractor must consider the full-tank level and draw-down level, especially for CW" ></Textbox>
+        flood-mitigation tool, the contractor must consider the full-tank level and draw-down level, especially for constructed wetland." ></Textbox>
         </div>
 
 
@@ -123,10 +123,11 @@ export default function Home() {
 
           <Zigzagsection
           item_index={4}
-            section_image={image_algal}
+            section_image={image_policy}
             heading="Supporting evidence-based policy"
-            content="The tool will help generate evidence on efficacy of NbS in improving lake health. This would help in formulating evidence-based policies. To generate the evidence, 
-          communities can use lake health score card, for which the link is provided in the lake heath index page."></Zigzagsection>
+            content={<><p> The tool will help generate evidence on efficacy of NbS in improving lake health. This would help in formulating evidence-based policies. To generate the evidence,  communities can use lake health score card, for which the link is provided in the <Link className="text-green-600"  href={'/lhi'} target="_blank"> lake heath index page.</Link></p>
+            </>}
+            ></Zigzagsection>
 
           <Zigzagsection
           item_index={5}

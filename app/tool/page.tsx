@@ -18,7 +18,7 @@ import { Shojumaru } from 'next/font/google'
 import Result from '../Components/Result'
 
 
-import { Fi_imgs, CW_imgs, vegitation_imgs, shoreline_know_more } from '../Constants'
+import { Fi_imgs, CW_imgs, vegitation_imgs, shoreline_know_more, FI_know_more, CW_know_more } from '../Constants'
 import SingleSlider from '../Components/SingleSlider'
 import Navbar from '../Components/Navbar'
 
@@ -656,7 +656,7 @@ const page = () => {
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
-                    <p className='p-8'> If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal constructed wetland (CW) is considered for calculations. If not, free-water surface CW would be considered.
+                    <p className='p-8'>Feasible depth is the optimum depth to which a constructed wetland system (like subsurface flow or free water surface types) can be excavated or installed, such that it maintains effective treatment performance without causing groundwater contamination, flooding, or system failure due to rising water tables. If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal constructed wetland (CW) is considered for calculations. If not, free-water surface CW would be considered.
                     </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(false) }}>x</p>
                   </div>
@@ -774,13 +774,13 @@ const page = () => {
         {/* Show only CW ---------------------------------------------------------------------------- */}
         <div className={`${(showcw && !showfi) ? 'flex flex-col ' : 'hidden'} justify-center items-center  `}>
 
-          <p className='w-full text-center text-xl font-semibold' >Only CW is sufficient</p>
+          <p className='w-full text-center text-xl font-semibold' >Only constructed wetland is sufficient</p>
           <div className='w-full flex justify-center items-center'>
             <div className='mt-2'>
               <p className='w-full text-start px-4 text-lg '>Constructed wetland as the sole intervention is recommended when:
                 <br></br>• Sufficient area is available for CW implementation
-                <br></br>• CW alone can achieve the required nutrient removal
-                <br></br>• Calculated area requirements for CW are below 25% of the lake area
+                <br></br>• Constructed wetland alone can achieve the required nutrient removal
+                <br></br>• Calculated area requirements for constructed wetland are below 25% of the lake area
 
 
               </p>
@@ -803,7 +803,7 @@ const page = () => {
               title='Constructed Wetland'
               description={`• Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
               images={CW_imgs}
-              btn_link={''}
+              btn_link={CW_know_more}
               percent={`${result_CW_percent} %`}
               area={`${result_CW_area} m²`}
               handlesingleslide={() => handle_singleslide(CW_imgs)} />
@@ -824,10 +824,10 @@ const page = () => {
           <p className='w-full text-center text-xl font-semibold' >Only floating island is sufficient</p>
           <div className='w-full flex justify-center items-center'>
             <div className='mt-2'>
-              <p className='w-full text-start px-4 text-lg'>FI as the sole intervention is recommended when:
-                <br></br>Sufficient area is available for CW implementation
-                <br></br>• CW alone can achieve the required nutrient removal
-                <br></br>• Calculated area requirements for CW are below 25% of the lake area
+              <p className='w-full text-start px-4 text-lg'>Floating island as the sole intervention is recommended when:
+                <br></br>• Area for the deployment of CW is not available / Inflow is not present. 
+                <br></br>• The estimated area required for the deployment of floating islands is below 25 % of the lake area.
+               
 
 
               </p>
@@ -852,7 +852,7 @@ const page = () => {
               description={`• Area for the deployment of CW is not available.
              • The estimated area required for the deployment of FIs is below 25 % of the lake area.`}
               images={Fi_imgs}
-              btn_link={''}
+              btn_link={FI_know_more}
               percent={`${result_fi_percent} %`}
               area={`${result_fi_area} m²`}
               handlesingleslide={() => handle_singleslide(Fi_imgs)} />
@@ -875,8 +875,8 @@ const page = () => {
             <div className='w-full flex justify-center items-center'>
               <div className='mt-2'>
                 <p className='w-full text-start px-4 text-lg'>Combined approach is recommended when:
-                  <br></br>• CW alone cannot achieve the required nutrient removal
-                  <br></br>• Additional treatment is needed to supplement the CW
+                  <br></br>• Constructed wetland alone cannot achieve the required nutrient removal
+                  <br></br>• Additional treatment is needed to supplement the constructed wetland
                   <br></br>• The combined area requirements are below 25% of the lake area
                 </p>
               </div>
@@ -900,7 +900,7 @@ const page = () => {
               title='Constructed Wetland'
               description={``}
               images={CW_imgs}
-              btn_link={''}
+              btn_link={CW_know_more}
               percent={`${result_CW_percent} %`}
               area={`${result_CW_area} m²`}
               handlesingleslide={() => handle_singleslide(CW_imgs)} />
@@ -909,7 +909,7 @@ const page = () => {
               title='Floating island'
               description={``}
               images={Fi_imgs}
-              btn_link={''}
+              btn_link={FI_know_more}
               percent={`${result_fi_percent} %`}
               area={`${result_fi_area} m²`}
               handlesingleslide={() => handle_singleslide(Fi_imgs)} />
@@ -933,7 +933,7 @@ const page = () => {
             <div className='mt-2'>
               <p className='w-full text-start px-4 lg:px-20 text-lg'>The pollutant load inflow to the lake is significantly higher than the load that could be handled by constructed wetlands, floating islands or combination. This is because:
                 <br></br>• Treatment requirements cannot be met within the spatial constraints
-                <br></br>• The required area for CW and/or FI exceeds 25% of the lake area.
+                <br></br>• The required area for constructed wetland and/or floating island exceeds 25% of the lake area.
 
               </p>
             </div>
