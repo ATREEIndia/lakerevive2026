@@ -69,9 +69,9 @@ const page = () => {
   const [result_CW_area, Set_result_CW_area] = useState('0')
   const [result_fi_percent, Set_result_fi_percent] = useState('0')
   const [result_CW_percent, Set_result_CW_percent] = useState('0')
-  const [showfi, Setshowfi] = useState(true);
-  const [showcw, Setshowcw] = useState(true);
-  const [showresult, Setshowresult] = useState(true);
+  const [showfi, Setshowfi] = useState(false);
+  const [showcw, Setshowcw] = useState(false);
+  const [showresult, Setshowresult] = useState(false);
   const [showsingleslider, Setshowsingleslider] = useState(false);
   const [single_slider_imgs, Setsingle_slider_imgs] = useState<any[]>([]);
 
