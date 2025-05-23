@@ -363,13 +363,14 @@ const page = () => {
 
 
     };
-    useEffect(()=>{
+   
+  }
+   useEffect(()=>{
       if(showresult){
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       }
 
     },[showresult])
-  }
 
 
 
@@ -768,7 +769,7 @@ const page = () => {
           <p className='w-full text-center text-xl font-semibold' >Only CW is sufficient</p>
           <div className='w-full flex justify-center items-center'>
             <div className='mt-2'>
-              <p className='w-full text-start px-4 text-lg '>CW as the sole intervention is recommended when:
+              <p className='w-full text-start px-4 text-lg '>Constructed wetland as the sole intervention is recommended when:
                 <br></br>• Sufficient area is available for CW implementation
                 <br></br>• CW alone can achieve the required nutrient removal
                 <br></br>• Calculated area requirements for CW are below 25% of the lake area
@@ -812,7 +813,7 @@ const page = () => {
 
         {/* show only fi -------------------------------------------------------------------------------------*/}
         <div className={`${(!showcw && showfi) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col`}>
-          <p className='w-full text-center text-xl font-semibold' >Only FI is sufficient</p>
+          <p className='w-full text-center text-xl font-semibold' >Only floating island is sufficient</p>
           <div className='w-full flex justify-center items-center'>
             <div className='mt-2'>
               <p className='w-full text-start px-4 text-lg'>FI as the sole intervention is recommended when:
@@ -862,7 +863,7 @@ const page = () => {
         {/* show all 3 --------------------------------------------------------------------------------------------*/}
         <div className={`${(showcw && showfi) ? 'flex flex-col' : 'hidden'}  justify-center items-center flex-col`}>
           <div className='w-full p-2 flex flex-col justify-center'>
-            <p className='w-full text-center text-xl font-semibold' >Combination of CW and FI is required</p>
+            <p className='w-full text-center text-xl font-semibold' >Combination of constructed weland and floating island is required</p>
             <div className='w-full flex justify-center items-center'>
               <div className='mt-2'>
                 <p className='w-full text-start px-4 text-lg'>Combined approach is recommended when:

@@ -74,7 +74,7 @@ const page = () => {
                     section_image={image_tp}
                     heading="Nutrient levels (Total phosphorus levels):"
                     content={<>
-                    <p>Users should enter the total phosphorus(TP) concentration in the lake, as reported in the 
+                    <p>Users should enter the Total Phosphorus (TP) concentration in the lake, as reported in the 
                     detailed project report or can get a water sample tested in the accredited water testing laboratory. The 
                     TP data collected/reported should coincide with the location of SD measurements. This parameter is also scored on a 
                     scale of 1 to 5 based on predefined scoring guidelines shown in {''}<Link href="#table" className="text-green-600 underline scroll-smooth">Table 2.</Link>{''}</p>
