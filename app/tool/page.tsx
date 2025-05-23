@@ -794,7 +794,7 @@ const page = () => {
             <Result
               title='Constructed Wetland'
               description={`• Sufficient area is available for CW implementation\n• CW alone can achieve the required nutrient removal\n• Calculated area requirements for CW are below 25% of the lake area`}
-              images={Fi_imgs}
+              images={CW_imgs}
               btn_link={''}
               percent={`${result_CW_percent} %`}
               area={`${result_CW_area} m²`}
