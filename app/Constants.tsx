@@ -24,7 +24,7 @@ import sreekuttan_img from '@/public/sreekuttan.jpg'
 export const navlink = [
 
     { href: "/tool", label: "Tool" },
-    { href: "/", label: "NbS" },
+    { href: "/nbs", label: "NbS" },
     { href: "/lhi", label: "Lake health index" },
     { href: "/resources", label: "Resources" },
     { href: "/team", label: "Team" },
@@ -36,9 +36,10 @@ export const teams = [
     {
         Name: "Sreekuttan V N",
         Designation: "Communication officer, ATREE",
-        Designation2: "(Website Developer)",  
-        Image_URL:sreekuttan_img,  
-        Profie_url: 'https://www.atree.org/profile/sree-kuttan/'}
+        Designation2: "(Website Developer)",
+        Image_URL: sreekuttan_img,
+        Profie_url: 'https://www.atree.org/profile/sree-kuttan/'
+    }
 ]
 export const Fi_imgs = [fi_img1, fi_img2, fi_img3]
 export const CW_imgs = [cw_img1, cw_img2]
@@ -46,3 +47,16 @@ export const vegitation_imgs = [vg_img1]
 
 
 export const shoreline_know_more = 'https://drive.google.com/file/d/1ED_JNrejP6SE19MRDc77SKrBYQop2Oz0/view?usp=sharing';
+
+export const resource_list = [
+    {
+        resource_title: "Logic Flow",
+        resource_sub_title: "some ",
+        resource_URL: "https://docs.google.com/presentation/d/1UPSOINIvivCt89MySGC6VJBnm2ZJ7vj7/edit?usp=sharing&ouid=107152544725028953630&rtpof=true&sd=true",
+    },
+    {
+        resource_title: "Logic Flow",
+        resource_sub_title: "",
+        resource_URL: "https://docs.google.com/presentation/d/1UPSOINIvivCt89MySGC6VJBnm2ZJ7vj7/edit?usp=sharing&ouid=107152544725028953630&rtpof=true&sd=true",
+    }
+]

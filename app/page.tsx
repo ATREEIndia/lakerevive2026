@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Heading from "./Components/Heading";
-import SubHeading from "./Components/SubHeading";
+import Zigzagsection from "./Components/Zigzgasection";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import website_amin from "@/public/website-working.json";
@@ -88,40 +88,46 @@ export default function Home() {
         solutions to address issues such as algal bloom or low water clarity and extremely low early morning DO (<4mg/l) caused by 
         inflows of nutrients such as TP and TN." ></Textbox>
 
-        <div className="w-full mt-4 flex flex-col gap-4">
-          <HomeRowsection
+        <div className="w-full mt-4 flex flex-col gap-4 sm:gap-0">
+
+          <Zigzagsection
+            item_index={1}
             section_image={image_urban_Lake_crisis}
             heading="Addresses the urban Lake crisis"
             content="Lakes across the rapidly urbanising catchments are deteriorating at an alarming rate due to sewage inflow, 
           industrial pollution and encroachment. In many cities, including Bengaluru, most of urban water bodies show signs of severe degradation, 
           with high nutrient loads leading to eutrophication, algal blooms and fish kills. LakeRevive provides timely 
-          intervention strategies to reverse this decline."></HomeRowsection>
+          intervention strategies to reverse this decline."></Zigzagsection>
 
-          <HomeRowsection
+          <Zigzagsection
+          item_index={2}
             section_image={image_knowledge_gap}
             heading="Bridging the knowledge-implementation Gap"
             content="Despite growing scientific understanding of lake ecosystems, there remains a significant gap between research and practical implementation of NbS. 
           Due to the lack of design principles, many restoration projects fail to achieve improved water quality and biodiversity at urban lakes. LakeRevive bridges 
-          this gap by translating complex scientific principles into actionable recommendations."></HomeRowsection>
+          this gap by translating complex scientific principles into actionable recommendations."></Zigzagsection>
 
-          <HomeRowsection
+          <Zigzagsection
+          item_index={3}
             section_image={image_democratic_lake_conservation}
             heading="Democratising Lake Conservation"
             content="Lake restoration has traditionally required specialised expertise that is often inaccessible to local communities and smaller organisations. 
           LakeRevive democratises this process by making scientific decision-making available to a wider audience, empowering local stakeholders to take meaningful 
-          action for their neighborhood lakes."></HomeRowsection>
+          action for their neighborhood lakes."></Zigzagsection>
 
-          <HomeRowsection
+          <Zigzagsection
+          item_index={4}
             section_image={image_algal}
             heading="Supporting evidence-based policy"
             content="The tool will help generate evidence on efficacy of NbS in improving lake health. This would help in formulating evidence-based policies. To generate the evidence, 
-          communities can use lake health score card, for which the link is provided in the lake heath index page."></HomeRowsection>
+          communities can use lake health score card, for which the link is provided in the lake heath index page."></Zigzagsection>
 
-          <HomeRowsection
+          <Zigzagsection
+          item_index={5}
             section_image={image_clean_lake}
             heading="Preserving ecosystem services"
             content="Access to clean lakes enhances mental well-being. Studies show that spending time in natural spaces reduces stress, boosts mood and fosters a sense of connection 
-          with nature. Restored lakes become community hubs for recreation, reflection and learning."></HomeRowsection>
+          with nature. Restored lakes become community hubs for recreation, reflection and learning."></Zigzagsection>
 
         </div>
 
@@ -172,10 +178,12 @@ export default function Home() {
               • Plant species recommendations
               • Maintenance requirements `} />
 
-            
+
           </div>
 
         </div>
+
+
 
 
 
