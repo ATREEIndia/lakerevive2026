@@ -24,8 +24,8 @@ import sreekuttan_img from '@/public/sreekuttan.jpg'
 export const navlink = [
 
     { href: "/tool", label: "Tool" },
-    { href: "/nbs", label: "NbS" },
-    { href: "/lhi", label: "Lake health index" },
+    { href: "/nbs", label: "Nature-based solutions" },
+    { href: "/lhi", label: "Lake Health Index" },
     { href: "/resources", label: "Resources" },
     { href: "/team", label: "Team" },
 
@@ -50,11 +50,11 @@ export const shoreline_know_more = 'https://drive.google.com/file/d/1ED_JNrejP6S
 
 export const resource_list = [
     {
-        resource_title: "Logic Flow",
-        resource_sub_title: "some ",
+        resource_title: "SoP for floaring island",
+        resource_sub_title: " ",
         resource_URL: "https://docs.google.com/presentation/d/1UPSOINIvivCt89MySGC6VJBnm2ZJ7vj7/edit?usp=sharing&ouid=107152544725028953630&rtpof=true&sd=true",
     },
-    {
+    {                                                                                                                                                                                                                                                                                       
         resource_title: "Logic Flow",
         resource_sub_title: "",
         resource_URL: "https://docs.google.com/presentation/d/1UPSOINIvivCt89MySGC6VJBnm2ZJ7vj7/edit?usp=sharing&ouid=107152544725028953630&rtpof=true&sd=true",

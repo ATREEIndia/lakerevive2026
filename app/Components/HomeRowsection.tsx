@@ -12,9 +12,9 @@ type homerowsectionprobs={
 
 const HomeRowsection = ({section_image, heading,content}:homerowsectionprobs) => {
     return (
-        <div className='w-full flex flex-col sm:flex-row pb-4 border-b-2 border-gray-300'>
+        <div className='w-full px-2 flex flex-col sm:flex-row pb-4 border-b-2 border-gray-300'>
             {/* left */}
-            <div className=' relative h-[300px] sm:w-[50%]'>
+            <div className=' relative h-[400px] sm:w-[50%]'>
                 <Image
                  className='object-cover'
                     src={section_image}

@@ -9,7 +9,7 @@ import image_sv from '@/public/sv_1.jpg'
 const page = () => {
     return (
         <div>
-            <Navbar currentpage='NbS'></Navbar>
+            <Navbar currentpage='Nature-based solutions'></Navbar>
             <Banner></Banner>
             <div className='w-full px-2 mt-4'>
                 <Zigzgasection
