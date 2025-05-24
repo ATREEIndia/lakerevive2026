@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import Footer from "./Components/Footer";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${getpoppins.className} antialiased  `}
       >
         {children}
+        <Analytics></Analytics>
 
          <div className=" flex w-full h-20 flex-col-reverse mt-10 ">
           <Footer />
