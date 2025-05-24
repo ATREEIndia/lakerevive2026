@@ -103,3 +103,5 @@ export const resource_list = [
         resource_URL: "https://docs.google.com/presentation/d/1UPSOINIvivCt89MySGC6VJBnm2ZJ7vj7/edit?usp=sharing&ouid=107152544725028953630&rtpof=true&sd=true",
     }
 ]
+
+export const sheetbaseURL='https://script.google.com/macros/s/AKfycbx8uPsGlb_dhRSn8NLfuI2KQll-s8m5jtiqlAomm0pY9GUXsPXA-S1FYwY9mHwQovL_Pg/exec?'

@@ -18,7 +18,7 @@ import { Shojumaru } from 'next/font/google'
 import Result from '../Components/Result'
 
 
-import { Fi_imgs, CW_imgs, vegitation_imgs, shoreline_know_more, FI_know_more, CW_know_more } from '../Constants'
+import { Fi_imgs, CW_imgs, vegitation_imgs, shoreline_know_more, FI_know_more, CW_know_more, sheetbaseURL } from '../Constants'
 import SingleSlider from '../Components/SingleSlider'
 import Navbar from '../Components/Navbar'
 
@@ -50,7 +50,16 @@ const page = () => {
   const [isinlethoveropen, Setisinlethoveropne] = useState(false)
   const [isfeasible_depthnote_open, Setisfeasible_depthnote_open] = useState(false)
 
-//fied validity checker
+  //observations
+  const [obs_fishkill, Setobs_fishkill] = useState(false);
+  const [obs_alga, Setobs_alga] = useState(false);
+  const [obs_sewage, Setobs_sewage] = useState(false);
+  const [obs_floaringveg, Setobs_floatingveg] = useState(false);
+  const [obs_foam, Setobs_foam] = useState(false);
+
+
+
+  //fied validity checker
   const [islakenamevalid, Setisleknamevalid] = useState(true)
   const [isemailvalid, Setisemailvalid] = useState(true)
   const [isinputlakedepthvalid, Setisinputlakedepthvalid] = useState(true)
@@ -72,6 +81,9 @@ const page = () => {
   // const [load_uptaken_by_new_CW, Set_load_uptaken_by_new_CW] = useState(0)
   // const [Load_for_FI, Set_Load_for_FI] = useState(0)
 
+  const [calculationTrigger, setCalculationTrigger] = useState(0);
+
+  const [final_result, Setfinal_result] = useState('')
   const [result_fi_area, Set_result_fi_area] = useState('0')
   const [result_CW_area, Set_result_CW_area] = useState('0')
   const [result_fi_percent, Set_result_fi_percent] = useState('0')
@@ -189,14 +201,14 @@ const page = () => {
       Setisinputlakedepthvalid(false)
       return false;
     }
-     Setisinputlakedepthvalid(true)
+    Setisinputlakedepthvalid(true)
 
     if (Input_laketp < 0.01) {
       Setisinputlaketpvalid(false)
       alert('Lake total phosphorus level required');
       return false;
     }
-      Setisinputlaketpvalid(true)
+    Setisinputlaketpvalid(true)
 
     if (Input_inflowrate < 1 && isinflowavilable) {
       alert('Input inflow rate or click on No dry-weather inflow to skip the field');
@@ -226,6 +238,7 @@ const page = () => {
 
 
     if (isfieldsvalid()) {
+      setCalculationTrigger(prev => prev + 1);
       let Result_area_req_fi;
       let Result_percent_area_of_lake_covered_by_fi = 0;
 
@@ -394,18 +407,80 @@ const page = () => {
       console.log("Result_percent_total_area_covered= " + Result_percent_total_area_covered)
       console.log("Remarks= " + Remarks)
 
+       
+
 
 
 
     };
 
   }
+
+  function handle_obs_fishkill() {
+    Setobs_fishkill(!obs_fishkill)
+    console.log("fishkill= " + obs_fishkill)
+  }
+  function handle_obs_alga() {
+    Setobs_alga(!obs_alga)
+  }
+  function handle_obs_fv() {
+    Setobs_floatingveg(!obs_floaringveg)
+  }
+  function handle_obs_foam() {
+    Setobs_foam(!obs_foam)
+  }
+  function handle_obs_sewage() {
+    Setobs_sewage(!obs_sewage)
+  }
+
+
+
+
+
   useEffect(() => {
     if (showresult) {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          
     }
 
+
   }, [showresult])
+
+ useEffect(() => {
+  let result = '';
+
+  if (showcw && showfi) {
+    result = 'Combination of constructed wetland and floating island is required';
+  } else if (!showcw && showfi) {
+    result = 'Only floating island is sufficient';
+  } else if (showcw && !showfi) {
+    result = 'Only constructed wetland is sufficient';
+  } else {
+    result = 'NbS is not feasible';
+  }
+
+  Setfinal_result(result);
+  if(showresult){
+    sendtosheet(result)
+  }
+ 
+ 
+}, [showresult, result_CW_area,result_fi_area, showcw, showfi]);
+
+  function sendtosheet(result:string) {
+   
+
+    let parameters = `email=${Input_email}&lakename=${encodeURIComponent(Input_lakename)}&wsa=${Input_lakearea}&isfesarea=${isareaavaiable}&fesarea=${Input_cwArea}&fesdepth=${Input_feasible_depth}&isinflow=${isinflowavilable}&inflowrate=${Input_inflowrate}&inflowtp=${Input_inflowtp}&laketp=${Input_laketp}&secchi=${Input_secchidepth}&result=${result}&res_cwarea=${result_CW_area}&res_cwpercent=${result_CW_percent}&res_fiarea=${result_fi_area}&res_fipercent=${result_fi_percent}&fishkill=${obs_fishkill}&algalbloom=${obs_alga}&sewage=${obs_sewage}&floatingveg=${obs_floaringveg}&foam=${obs_foam}`;
+
+    const final_url = sheetbaseURL + parameters;
+
+    fetch(final_url)
+      .then(response => response.text())
+      .then(text => {
+        console.log(text)
+          ;
+      })
+  }
 
 
 
@@ -678,9 +753,9 @@ const page = () => {
             {/* MORPHOLOGY ITEMS */}
             <div className='w-full flex flex-col my-4 gap-6'>
 
-              <Inputitem title={'Lake - Water spread area (m²)'} value={Input_lakearea > 0 ? Input_lakearea : ''} updatefunction={updateLakeArea} custom_class={`${isinputlakeareavalid ? '' : 'border-red-400' }`}></Inputitem>
+              <Inputitem title={'Lake - Water spread area (m²)'} value={Input_lakearea > 0 ? Input_lakearea : ''} updatefunction={updateLakeArea} custom_class={`${isinputlakeareavalid ? '' : 'border-red-400'}`}></Inputitem>
               <Inputitem title={'Lake - Average depth (m)'} value={Input_lakedepth > 0 ? Input_lakedepth : ''} updatefunction={updatedepth}
-              custom_class={`${isinputlakedepthvalid ? '' : 'border-red-400' }`}></Inputitem>
+                custom_class={`${isinputlakedepthvalid ? '' : 'border-red-400'}`}></Inputitem>
 
               {/*Available area */}
               <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
@@ -752,7 +827,7 @@ const page = () => {
               <Inputitem title={<>
                 Total phosphorus (TP) level (mg/L) – <b>Inlake</b>
               </>}
-                value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp} custom_class={`${isinputlaketpvalid ? '' : 'border-red-400' }`}></Inputitem>
+                value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp} custom_class={`${isinputlaketpvalid ? '' : 'border-red-400'}`}></Inputitem>
 
               <Inputitem title={'Secchi depth (m)'} value={Input_secchidepth > 0 ? Input_secchidepth : ''} updatefunction={updatesechidepth}></Inputitem>
 
@@ -773,26 +848,31 @@ const page = () => {
 
             <ObservationsTab title='Fish kills'
               explanation='Have you seen any dead fish floating on the surface or gathering near the shore?'
-              image={deadfishimage}></ObservationsTab>
+              image={deadfishimage}
+              handleobs={handle_obs_fishkill}></ObservationsTab>
 
             <ObservationsTab title='Algal bloom'
               explanation=' Have you observed green or coloured patches spreading across the lake? '
-              image={algalbloomimage}></ObservationsTab>
+              image={algalbloomimage}
+              handleobs={handle_obs_alga}></ObservationsTab>
 
             <ObservationsTab title='Sewage inflow or bad odour'
               explanation='Have you felt any strong, unpleasant smell around the lake, or seen pipes or drains discharging sewage into it? '
-              image={swageimage}></ObservationsTab>
+              image={swageimage}
+              handleobs={handle_obs_sewage}></ObservationsTab>
 
 
             <ObservationsTab title='Floating vegetation'
               explanation='Have you noticed thick clusters of floating plants like water hyacinth or duckweed covering significant area of the lake?'
-              image={waterhyacinthimage}></ObservationsTab>
+              image={waterhyacinthimage}
+              handleobs={handle_obs_fv}></ObservationsTab>
           </div>
           <div className='w-full grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-4 sm:gap-1 lg:px-4'>
 
             <ObservationsTab title='Foaming on the lake'
               explanation='Have you observed foam forming along the edges or surface of the lake?'
-              image={foamimage}></ObservationsTab>
+              image={foamimage}
+              handleobs={handle_obs_foam}></ObservationsTab>
           </div>
 
         </div>
@@ -967,6 +1047,7 @@ const page = () => {
 
         {/* Show none --------------------------------------------------------------------------------------- */}
         <div className={`${((!showcw && !showfi)) ? 'flex flex-col ' : 'hidden'}  justify-center items-center flex-col `}>
+
 
           <p className='w-full text-center text-xl font-semibold' >NbS is not feasible</p>
           <div className='w-full flex justify-center items-center'>

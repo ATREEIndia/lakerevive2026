@@ -4,11 +4,12 @@ import React from 'react'
 type Obsprobs = {
     image: StaticImageData;
     title: string,
-    explanation: string
+    explanation: string,
+    handleobs:()=>void;
 
 }
 
-const ObservationsTab = ({ image, title, explanation }: Obsprobs) => {
+const ObservationsTab = ({ image, title, explanation, handleobs }: Obsprobs) => {
     return (
         <div >
             <div className='lg:h-[400px] sm:h-[420px]  bg-white p-2 rounded-lg flex mt-5 border-2 border-[#c8c6c4] shadow-lg flex-col '>
@@ -22,7 +23,7 @@ const ObservationsTab = ({ image, title, explanation }: Obsprobs) => {
                     <div className='flex flex-col-reverse align-bottom  h-full'>
                         <div className='w-full flex items-center justify-start gap-3 px-4 p-2 mt-2 bg-gray-200 rounded-xl '>
 
-                            <input className='w-5 h-5 cursor-pointer accent-red-700' type='checkbox'></input>
+                            <input className='w-5 h-5 cursor-pointer accent-red-700' type='checkbox' onChange={handleobs}></input>
 
 
                             <p>Yes</p>
