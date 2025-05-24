@@ -696,7 +696,7 @@ const page = () => {
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full`}>
                   <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
-                    <p className='p-8'>Feasible depth is the optimum depth to which a constructed wetland system (like subsurface flow or free water surface types) can be excavated or installed, such that it maintains effective treatment performance without causing groundwater contamination, flooding, or system failure due to rising water tables. If sufficient depth of 0.5 meters above lake's full tank level is available, horizontal constructed wetland (CW) is considered for calculations. If not, free-water surface CW would be considered.
+                    <p className='p-8'>Feasible depth is the optimal depth for constructing wetlands to ensure effective treatment without causing groundwater contamination, flooding, or failure from rising water tables. If at least 0.5 meters above the lake’s full tank level is available, a horizontal constructed wetland should be used; else, a free-water surface constructed wetland may be considered.
                     </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(false) }}>x</p>
                   </div>
