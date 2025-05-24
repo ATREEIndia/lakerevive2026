@@ -30,6 +30,7 @@ import fionly_img from '@/public/fi_only.jpg'
 const page = () => {
   //input
   const [Input_lakename, Setlakename] = useState("");
+  const [Input_email, Setemail] = useState("");
   const [Input_inflowrate, Setinflowrate] = useState(0);
   const [Input_inflowtp, Setinflowtp] = useState(0);
   const [Input_laketp, Setlaketp] = useState(0.0);
@@ -44,11 +45,17 @@ const page = () => {
   const [isareaavaiable, Setisareaavailabe] = useState(true);
   const [isinflowavilable, Setisinflowavilable] = useState(true);
 
-  const [islakenamevalid, Setisleknamevalid] = useState(true)
+
 
   const [isinlethoveropen, Setisinlethoveropne] = useState(false)
   const [isfeasible_depthnote_open, Setisfeasible_depthnote_open] = useState(false)
 
+//fied validity checker
+  const [islakenamevalid, Setisleknamevalid] = useState(true)
+  const [isemailvalid, Setisemailvalid] = useState(true)
+  const [isinputlakedepthvalid, Setisinputlakedepthvalid] = useState(true)
+  const [isinputlakeareavalid, Setisinputlakeareavalid] = useState(true)
+  const [isinputlaketpvalid, Setisinputlaketpvalid] = useState(true)
   //results
   // const [showfi, Setshowfi] = useState(false);
   // const [showcw, Setshowcw] = useState(false);
@@ -85,6 +92,11 @@ const page = () => {
   function updateLakeName(e: React.ChangeEvent<HTMLInputElement>) {
     const val = (e.target.value);
     Setlakename(val);
+  }
+  function updateEmail(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value;
+    Setemail(val)
+
   }
   function updateInflowrate(e: React.ChangeEvent<HTMLInputElement>) {
     const val = Number.parseFloat(e.target.value);
@@ -158,13 +170,36 @@ const page = () => {
       Setisleknamevalid(true)
     }
 
-    if (Input_lakearea < 1 || Input_lakedepth < 0.01 || Input_laketp < 0.01) {
-      alert('Input valid data');
+    if (!Input_email.includes('@')) {
+      alert('Input valid Email');
+      Setisemailvalid(false)
       return false;
     }
+    Setisemailvalid(true)
+
+    if (Input_lakearea < 1) {
+      alert('Lake - Water spread area required');
+      Setisinputlakeareavalid(false)
+      return false;
+    }
+    Setisinputlakeareavalid(true)
+
+    if (Input_lakedepth < 0.01) {
+      alert('Lake - Average depth required');
+      Setisinputlakedepthvalid(false)
+      return false;
+    }
+     Setisinputlakedepthvalid(true)
+
+    if (Input_laketp < 0.01) {
+      Setisinputlaketpvalid(false)
+      alert('Lake total phosphorus level required');
+      return false;
+    }
+      Setisinputlaketpvalid(true)
 
     if (Input_inflowrate < 1 && isinflowavilable) {
-      alert('Input inflow data or click on No dry-weather inflow to skip the field');
+      alert('Input inflow rate or click on No dry-weather inflow to skip the field');
       return false;
     }
     if (Input_feasible_depth < .5 && isdepthAvaiable) {
@@ -631,6 +666,10 @@ const page = () => {
               <Inputitem title={'Name of the lake'} type='text' value={Input_lakename} updatefunction={updateLakeName} custom_class={`${islakenamevalid ? '' : 'border-red-400'}`}></Inputitem>
             </div>
 
+            <div className='w-full flex flex-col my-4 gap-6'>
+              <Inputitem title={'Enter your email'} type='text' value={Input_email} updatefunction={updateEmail} custom_class={`${isemailvalid ? '' : 'border-red-400'}`}></Inputitem>
+            </div>
+
 
             <div className='mt-5'>
               <SubHeading text='MORPHOLOGY' customClassName='font-semibold underline'></SubHeading>
@@ -639,8 +678,9 @@ const page = () => {
             {/* MORPHOLOGY ITEMS */}
             <div className='w-full flex flex-col my-4 gap-6'>
 
-              <Inputitem title={'Lake - Water spread area (m²)'} value={Input_lakearea > 0 ? Input_lakearea : ''} updatefunction={updateLakeArea}></Inputitem>
-              <Inputitem title={'Lake - Average depth (m)'} value={Input_lakedepth > 0 ? Input_lakedepth : ''} updatefunction={updatedepth}></Inputitem>
+              <Inputitem title={'Lake - Water spread area (m²)'} value={Input_lakearea > 0 ? Input_lakearea : ''} updatefunction={updateLakeArea} custom_class={`${isinputlakeareavalid ? '' : 'border-red-400' }`}></Inputitem>
+              <Inputitem title={'Lake - Average depth (m)'} value={Input_lakedepth > 0 ? Input_lakedepth : ''} updatefunction={updatedepth}
+              custom_class={`${isinputlakedepthvalid ? '' : 'border-red-400' }`}></Inputitem>
 
               {/*Available area */}
               <div className='w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
@@ -694,9 +734,9 @@ const page = () => {
                   </div>
                   <p className='flex flex-row-reverse w-full text-end px-8 font-bold text-blue-600 cursor-pointer' onClick={() => { Setisinlethoveropne(true) }}>Note</p>
                   <Inputitem title={'Inflow rate (m³/day)'} disable_status={!isinflowavilable} value={Input_inflowrate > 0 ? Input_inflowrate : ''} updatefunction={updateInflowrate}></Inputitem>
-                  <Inputitem title={<> 
+                  <Inputitem title={<>
                     Total phosphorus (TP) level (mg/L) – <b>Inflow</b>
-                  
+
                   </>}
 
                     disable_status={!isinflowavilable} value={Input_inflowtp > 0 ? Input_inflowtp : ''} updatefunction={updateInflowtp}></Inputitem>
@@ -712,7 +752,7 @@ const page = () => {
               <Inputitem title={<>
                 Total phosphorus (TP) level (mg/L) – <b>Inlake</b>
               </>}
-                value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp}></Inputitem>
+                value={Input_laketp > 0 ? Input_laketp : ''} updatefunction={updateLaketp} custom_class={`${isinputlaketpvalid ? '' : 'border-red-400' }`}></Inputitem>
 
               <Inputitem title={'Secchi depth (m)'} value={Input_secchidepth > 0 ? Input_secchidepth : ''} updatefunction={updatesechidepth}></Inputitem>
 
@@ -825,9 +865,9 @@ const page = () => {
           <div className='w-full flex justify-center items-center'>
             <div className='mt-2'>
               <p className='w-full text-start px-4 text-lg'>Floating island as the sole intervention is recommended when:
-                <br></br>• Area for the deployment of CW is not available / Inflow is not present. 
+                <br></br>• Area for the deployment of CW is not available / Inflow is not present.
                 <br></br>• The estimated area required for the deployment of floating islands is below 25 % of the lake area.
-               
+
 
 
               </p>
