@@ -462,6 +462,7 @@ const page = () => {
   Setfinal_result(result);
   if(showresult){
     sendtosheet(result)
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
  
  
