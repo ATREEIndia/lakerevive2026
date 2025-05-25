@@ -770,7 +770,7 @@ const page = () => {
               {/* Feasible depth */}
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full`}>
-                  <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
+                  <div className={`absolute z-20 top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isfeasible_depthnote_open ? 'flex' : 'hidden'}`}>
                     <p className='p-8'>Feasible depth is the optimal depth for constructing wetlands to ensure effective treatment without causing groundwater contamination, flooding, or failure from rising water tables. If at least 0.5 meters above the lake’s full tank level is available, a horizontal constructed wetland should be used; else, a free-water surface constructed wetland may be considered.
                     </p>
                     <p className='text-red-600 text-xl cursor-pointer' onClick={() => { Setisfeasible_depthnote_open(false) }}>x</p>
@@ -798,7 +798,7 @@ const page = () => {
               {/* Inflow Rate */}
               <div className='relative w-full border-2 border-gray-100 rounded-xl shadow-lg py-4 '>
                 <div className={` flex flex-col w-full gap-6`}>
-                  <div className={`absolute top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isinlethoveropen ? 'flex' : 'hidden'}`}>
+                  <div className={`absolute z-20 top-0 right-0 bg-white border-2 shadow-2xl border-blue-100 px-4 flex ${isinlethoveropen ? 'flex' : 'hidden'}`}>
                     {/* <p className='p-8'>Note: For Multiple inlets, enter the details individually to determine intervention for each inlet. Incase you wish to combine multiple
                       inltes you may consider weighted averages for the inlets using the formula; <br></br> ( (Q₁ × C₁ + Q₂ × C₂ + … + Qₙ × Cₙ) ÷ (Q₁ + Q₂ + … + Qₙ) ) <br></br> where  Q is inflow rate of inlets and C is Concentration.
                     </p> */}
