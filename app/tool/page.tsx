@@ -743,7 +743,7 @@ const page = () => {
             </div>
 
             <div className='w-full flex flex-col my-4 gap-6'>
-              <Inputitem title={'Enter your email'} type='text' value={Input_email} updatefunction={updateEmail} custom_class={`${isemailvalid ? '' : 'border-red-400'}`}></Inputitem>
+              <Inputitem title={'Enter your email'} type='email' value={Input_email} updatefunction={updateEmail} custom_class={`${isemailvalid ? '' : 'border-red-400'}`}></Inputitem>
             </div>
 
 
