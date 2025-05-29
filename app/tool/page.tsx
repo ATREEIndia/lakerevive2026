@@ -482,7 +482,7 @@ const page = () => {
   function sendtosheet(result:string) {
    
 
-    let parameters = `email=${Input_email}&lakename=${encodeURIComponent(Input_lakename)}&wsa=${Input_lakearea}&isfesarea=${isareaavaiable}&fesarea=${Input_cwArea}&fesdepth=${Input_feasible_depth}&isinflow=${isinflowavilable}&inflowrate=${Input_inflowrate}&inflowtp=${Input_inflowtp}&laketp=${Input_laketp}&secchi=${Input_secchidepth}&result=${result}&res_cwarea=${result_CW_area}&res_cwpercent=${result_CW_percent}&res_fiarea=${result_fi_area}&res_fipercent=${result_fi_percent}&fishkill=${obs_fishkill}&algalbloom=${obs_alga}&sewage=${obs_sewage}&floatingveg=${obs_floaringveg}&foam=${obs_foam}`;
+    let parameters = `email=${Input_email}&lakename=${encodeURIComponent(Input_lakename)}&ld=${Input_lakedepth}&wsa=${Input_lakearea}&isfesarea=${isareaavaiable}&fesarea=${Input_cwArea}&fesdepth=${Input_feasible_depth}&isinflow=${isinflowavilable}&inflowrate=${Input_inflowrate}&inflowtp=${Input_inflowtp}&laketp=${Input_laketp}&secchi=${Input_secchidepth}&result=${result}&res_cwarea=${result_CW_area}&res_cwpercent=${result_CW_percent}&res_fiarea=${result_fi_area}&res_fipercent=${result_fi_percent}&fishkill=${obs_fishkill}&algalbloom=${obs_alga}&sewage=${obs_sewage}&floatingveg=${obs_floaringveg}&foam=${obs_foam}`;
 
     const final_url = sheetbaseURL + parameters;
 
