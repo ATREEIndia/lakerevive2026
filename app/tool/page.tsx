@@ -274,9 +274,14 @@ const page = () => {
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
         Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(1))
+        if(Result_percent_area_of_lake_covered_by_fi>0){
         Setshowfi(true);
         Setshowcw(false);
+       
+
+        } 
         Setshowresult(true)
+        
 
 
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
@@ -320,9 +325,15 @@ const page = () => {
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
         Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(1))
+        if(Result_percent_area_of_lake_covered_by_fi>0){
         Setshowfi(true);
         Setshowcw(false);
         Setshowresult(true)
+
+        }
+        // Setshowfi(true);
+        // Setshowcw(false);
+       Setshowresult(true)
 
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
         console.log('Result_percent_area_of_lake_covered_by_fi= ' + Result_percent_area_of_lake_covered_by_fi)
