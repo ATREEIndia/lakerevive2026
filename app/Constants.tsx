@@ -93,14 +93,39 @@ export const FI_know_more = 'https://drive.google.com/drive/folders/1Ya1dS5lKCwQ
 
 export const resource_list = [
     {
-        resource_title: "SoP for floaring island",
-        resource_sub_title: " content",
-        resource_URL: "https://docs.google.com/presentation/d/1UPSOINIvivCt89MySGC6VJBnm2ZJ7vj7/edit?usp=sharing&ouid=107152544725028953630&rtpof=true&sd=true",
+        resource_title: "SoP for floating islands",
+        resource_sub_title: "Standard operating procedure on design, deployment and maintenance & monitoring of floating islands",
+        resource_URL: "https://drive.google.com/file/d/1ABXYa7IyRMwqWjGcRmofobj6j5_4BnF6/view?usp=drive_link",
     },
     {                                                                                                                                                                                                                                                                                       
-        resource_title: "Logic Flow",
-        resource_sub_title: "",
-        resource_URL: "https://docs.google.com/presentation/d/1UPSOINIvivCt89MySGC6VJBnm2ZJ7vj7/edit?usp=sharing&ouid=107152544725028953630&rtpof=true&sd=true",
+        resource_title: "SoP for constructed wetlands",
+        resource_sub_title: "Standard operating procedure for constructed wetland planning, design, implementation and operation & maintenance",
+        resource_URL: "https://drive.google.com/file/d/1JsTPfGCYTBgQ4PhxybCJB6MbDh71EsBX/view?usp=drive_link",
+    },
+    {                                                                                                                                                                                                                                                                                       
+        resource_title: "SoP for shoreline rehabilitation",
+        resource_sub_title: "Standard operating procedure for shoreline rejuvenation",
+        resource_URL: "https://drive.google.com/file/d/1ED_JNrejP6SE19MRDc77SKrBYQop2Oz0/view?usp=drive_link",
+    },
+    {                                                                                                                                                                                                                                                                                       
+        resource_title: "O&M manual for floating islands vegetation",
+        resource_sub_title: "Manual for management of vegetation on floating islands.",
+        resource_URL: "https://drive.google.com/file/d/1phOv3RcC4K7YKrMuwyB9ySYM3s4yj0or/view?usp=drive_link",
+    },
+    {                                                                                                                                                                                                                                                                                       
+        resource_title: "LakeRevive output manual",
+        resource_sub_title: "Manual for understanding LakeRevive outputs",
+        resource_URL: "https://drive.google.com/file/d/1hN3THzgmcqbaIIgCiq30Rv06jEiW8UmC/view?usp=drive_link",
+    },
+    {                                                                                                                                                                                                                                                                                       
+        resource_title: "Expert Panel Recommendations",
+        resource_sub_title: "A comprehensive panel-review report on floating islands",
+        resource_URL: "https://drive.google.com/file/d/1FtHA0rdLe-zXqB8i5orPhrdidK4wXczr/view?usp=drive_link",
+    },
+    {                                                                                                                                                                                                                                                                                       
+        resource_title: "How healthy is your lake? ",
+        resource_sub_title: "Video for some easy ways to monitor a lake's health using a Secchi Disk and a Dissolved Oxygen (DO) measuring device",
+        resource_URL: "https://www.youtube.com/watch?v=QGAwMq_VobI",
     }
 ]
 

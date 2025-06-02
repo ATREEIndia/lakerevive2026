@@ -15,8 +15,8 @@ const Resourceblock = ({title,subheading,link_url}:resourceprobs) => {
   return (
     <div>
         <div className='h-60 bg-green-900 flex flex-col items-center justify-center rounded-2xl shadow-2xl'>
-           <SubHeadingbold customClassName='text-white' text={title}></SubHeadingbold> 
-           <Textbox customstyle='text-white' Content={subheading}></Textbox>
+           <SubHeadingbold customClassName='text-white text-center' text={title}></SubHeadingbold> 
+           <Textbox customstyle='text-white px-4 text-center lg:text-[16px] py-2' Content={subheading}></Textbox>
            <Link className='p-4 bg-green-200 rounded-xl mt-3 hover:bg-green-800 shadow-2xl hover:border-2 hover:border-white font-bold hover:text-white'
             href={link_url} target='_blank'>
            Know more

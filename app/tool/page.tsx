@@ -775,7 +775,7 @@ const page = () => {
                   <Inputitem title={'Area available - Constructed wetland (m²)'} disable_status={!isareaavaiable} value={Input_cwArea > 0 ? Input_cwArea : ''} updatefunction={updateCWArea}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_cwArea > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisareaavailabe(!isareaavaiable)} >{isareaavaiable ? 'Area not available' : 'Area available'}</p>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => {Setisareaavailabe(!isareaavaiable);Setisdepthvailabe(!isareaavaiable)} } >{isareaavaiable ? 'Area not available' : 'Area available'}</p>
                 </div>
               </div>
 
