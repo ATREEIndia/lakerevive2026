@@ -34,6 +34,7 @@ export const navlink = [
     { href: "/lhi", label: "Lake Health Index" },
     { href: "/resources", label: "Resources" },
     { href: "/team", label: "Team" },
+    { href: "", label: "ENG/KA" },
 
 
 ]

@@ -45,7 +45,7 @@ const Navbar = ({ currentpage }: navprobs) => {
                 <div className='flex items-center'>
                    
                     <Image src={logo} height={70} width={0} alt='logo' />
-                    <div className='hidden sm:flex text-white flex-col'>
+                    <div className='hidden sm:flex text-white flex-col text-sm'>
                         <h1>Ashoka Trust for Research</h1>
                         <h1>In Ecology and the Environment</h1>
                     </div>
