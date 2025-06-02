@@ -22,6 +22,7 @@ const Resourceblock = ({title,subheading,link_url}:resourceprobs) => {
            Know more
            </Link>
         </div>
+        {/* ... */}
        
         
       
