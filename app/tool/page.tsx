@@ -791,7 +791,7 @@ const page = () => {
                   <Inputitem title={'Feasible depth -  Constructed wetland (m)'} disable_status={!isdepthAvaiable} value={Input_feasible_depth >= 0.5 ? Input_feasible_depth : ""} updatefunction={updatefeasibledepth}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_feasible_depth > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => Setisdepthvailabe(!isdepthAvaiable)} >{isdepthAvaiable ? 'Feasible depth not available' : 'Feasible depth available'}</p>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => {Setisdepthvailabe(!isdepthAvaiable)}} >{isdepthAvaiable ? 'Feasible depth not available' : 'Feasible depth available'}</p>
                 </div>
               </div>
 
