@@ -12,7 +12,7 @@ const page = () => {
     const { isEng, setisEng } = currentlanguage();
     return (
         <div>
-            <Navbar currentpage='Nature-based solutions'></Navbar>
+            <Navbar currentpage='NbS'></Navbar>
             <Banner title='Nature-based solutions'></Banner>
 
             {/* kannada and english */}
