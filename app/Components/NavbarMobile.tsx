@@ -7,11 +7,12 @@ import { IoMdClose } from "react-icons/io";
 type mobpeob = {
     customClass: string
     clickfunction: ()=>void
+    handlelanguage: ()=>void
 }
 
-const NavbarMobile = ({ customClass, clickfunction }: mobpeob) => {
+const NavbarMobile = ({ customClass, clickfunction, handlelanguage }: mobpeob) => {
     return (
-        <div className={`lg:hidden mt-20 pt-5 flex flex-col items-center gap-5 absolute top-0 left-0 w-[70%] sm:w-[50%] bg-green-500 h-[70vh] z-1000 transition transform -translate-x-100 duration-500 ease-in-out ${customClass}`}>
+        <div className={`xl:hidden mt-20 pt-5 flex flex-col items-center gap-5 absolute top-0 left-0 w-[70%] sm:w-[50%] bg-green-500 h-[70vh] z-1000 transition transform -translate-x-100 duration-500 ease-in-out ${customClass}`}>
             <div className='flex w-full justify-end px-10' onClick={clickfunction}>
                 <IoMdClose size={30} color='white' />
 
@@ -21,6 +22,9 @@ const NavbarMobile = ({ customClass, clickfunction }: mobpeob) => {
                     return <Link key={index} href={link.href}>
                         <p className='text-white uppercase text-center '>{link.label}</p></Link>
                 })}
+                <div className='p-2 bg-green-700 rounded-2xl px-4 flex justify-center items-center'>
+                        <p className={` cursor-pointer text-white text-sm hover:border-b-white hover:border-b-2`} onClick={handlelanguage}>ENG/KA</p>
+                    </div>
             </div>
 
         </div>

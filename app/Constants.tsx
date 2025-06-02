@@ -26,15 +26,17 @@ import jayath_img from '@/public/jayath.jpg'
 
 
 
+
+
 export const navlink = [
 
     { href: "/", label: "Home" },
     { href: "/tool", label: "Tool" },
-    { href: "/nbs", label: "Nature-based solutions" },
+    { href: "/nbs", label: "NbS" },
     { href: "/lhi", label: "Lake Health Index" },
     { href: "/resources", label: "Resources" },
     { href: "/team", label: "Team" },
-    { href: "", label: "ENG/KA" },
+   
 
 
 ]
