@@ -738,7 +738,7 @@ const page = () => {
     <div className='w-full relative'>
       <Navbar currentpage='Tool'></Navbar>
 
-      <Banner title='NbS design'></Banner>
+      <Banner title='NbS design tool'></Banner>
       <div className='w-full p-4 flex flex-col gap-2 sm:flex-row justify-between bg-[#fffdfc] '>
 
         {/* conatiner left */}
