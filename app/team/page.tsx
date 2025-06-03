@@ -14,7 +14,7 @@ const page = () => {
             <Navbar currentpage='Team' />
             <Banner title={"Our team"}></Banner>
 
-            <div className='w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-10 lg:grid-cols-3 lg:px-20 p-4'>
+            <div className='w-full h-full grid grid-cols-1 sm:grid-cols-2  gap-10  lg:grid-cols-3 lg:px-20 p-4'>
                 {teams.map((person: any, index) => {
                     return (
                         <Link key={index} href={person.Profie_url} className='flex justify-center items-center mx-2'target='_blank'>
@@ -25,8 +25,8 @@ const page = () => {
                                 </div>
                                 <h1 className='text-xl font-semibold text-gray-700 text-center'>{person.Name}</h1>
                                 <div className='h-10 w-full'>
-                                    <h1 className='text-lg font-normal text-gray-700 text-center'>{person.Designation}</h1>
-                                    <h1 className='text-lg font-normal text-gray-500 text-center'>{person.Designation2}</h1>
+                                    <h1 className='sm:text-lg font-normal text-gray-700 text-center'>{person.Designation}</h1>
+                                    <h1 className='sm:text-lg font-normal text-gray-500 text-center'>{person.Designation2}</h1>
                                 </div>
 
                             </div>

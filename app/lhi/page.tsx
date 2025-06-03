@@ -131,14 +131,7 @@ const page = () => {
 
                 
                 <div className={` flex-col gap-4 p-4 lg:px-8`}>
-                    <Textbox Content='To effectively track the performance of restoration interventions over time, 
-                it is essential to equip communities and stakeholders with a simple yet robust tool that can reflect changes in lake health. 
-                Drawing on both primary and secondary research, ATREE has developed a Lake Health Index (LHI), which has been fully integrated into the 
-                LakeRevive tool. This index serves multiple purposes: it assesses the existing condition of the lake on the basis of water clarity, nutrient 
-                levels, algal presence and the shoreline condition, supports the identification of appropriate restoration solutions, enables monitoring of 
-                intervention performance over time and guides the incorporation of new frameworks to enhance the ecological and use value of the lake. 
-                The tool is a practical resource for ongoing monitoring, evaluation and adaptive learning, empowering local communities to make informed, 
-                evidence-based decisions.'></Textbox>
+                    <Textbox Content='ಪುನಶ್ಚೇತನ ಹಸ್ತಕ್ಷೇಪಗಳ ಕಾರ್ಯಕ್ಷಮತೆಯನ್ನು ಸಮಯದೊಂದಿಗೆ ಪರಿಣಾಮಕಾರಿಯಾಗಿ ಅನುಸರಿಸಲು, ಕೆರೆಗಳ ಆರೋಗ್ಯದಲ್ಲಿ ಸಂಭವಿಸಿದ ಬದಲಾವಣೆಗಳನ್ನು ತೋರಿಸಲು ಸಮುದಾಯಗಳು ಮತ್ತು ಹಿತಾಸಕ್ತ ಪಕ್ಷಗಳಿಗೆ ಸರಳವಾದರೂ ಬಲಿಷ್ಠವಾದ ಸಾಧನವನ್ನು ಒದಗಿಸುವುದು ಅಗತ್ಯವಾಗಿದೆ. ಮೂಲ ಹಾಗೂ ದ್ವಿತೀಯಿಕ ಸಂಶೋಧನೆ ಆಧರಿಸಿ, ATREE ಸಂಸ್ಥೆಯು ಕೆರೆ ಆರೋಗ್ಯ ಸೂಚ್ಯಂಕವನ್ನು (LHI) ಅಭಿವೃದ್ಧಿಪಡಿಸಿದ್ದು, ಇದನ್ನು ಲೇಕ್‌ ರಿವೈವ್ ಸಾಧನದಲ್ಲಿ ಸಂಪೂರ್ಣವಾಗಿ ಏಕೀಕರಿಸಲಾಗಿದೆ.'></Textbox>
                 </div>
                 <div className='w-full p-8 flex flex-col justify-center items-center bg-gray-200'>
                     <Link href={"https://docs.google.com/spreadsheets/d/1NMARjNp-02n8yQpHoSy2yTaX2p_SrgDM/export?format=xlsx"} target='_blank'>
