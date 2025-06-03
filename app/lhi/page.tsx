@@ -24,7 +24,7 @@ const page = () => {
     return (
         <div>
             <Navbar currentpage='Lake Health Index'></Navbar>
-            <Banner></Banner>
+            <Banner title={isEng?`Lake health index`:'ಕೆರೆಯ ಆರೋಗ್ಯ ಸೂಚ್ಯಂಕ'}></Banner>
 
             {/* kannda and english */}
             {/* english */}
@@ -146,7 +146,7 @@ const page = () => {
                         <button
                             className='px-10 cursor-pointer py-3 bg-[#1e8989] text-white font-semibold rounded-xl shadow-md hover:bg-[#60adad] active:scale-95 transition transform duration-150'
                         >
-                            ಸರೋವರ ಆರೋಗ್ಯ ಸೂಚ್ಯಂಕ ಹಾಳೆಯನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ
+                            ಕೆರೆಯ ಆರೋಗ್ಯ ಸೂಚ್ಯಂಕ
                         </button>
                     </Link>
                 </div>
