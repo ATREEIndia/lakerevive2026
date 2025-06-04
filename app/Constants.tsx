@@ -90,8 +90,8 @@ export const CW_imgs = [cw_img1, cw_img2]
 export const vegitation_imgs = [vg_img1, vg_img2]
 
 
-export const shoreline_know_more = 'https://drive.google.com/file/d/1ED_JNrejP6SE19MRDc77SKrBYQop2Oz0/view?usp=sharing';
-export const CW_know_more = 'https://drive.google.com/file/d/1FwnYcbXlCI5QVFXch8TRp9mfxsm5rqTz/view?usp=drive_link';
+export const shoreline_know_more = 'https://drive.google.com/drive/folders/13y2g8Gs9LjqmOkmDXah8RB8IjhOeDidQ?usp=drive_link';
+export const CW_know_more = 'https://drive.google.com/drive/folders/1-0LF8MFjuEU3z3plIk9AhrvuIP31tCAP?usp=drive_link';
 export const FI_know_more = 'https://drive.google.com/drive/folders/1Ya1dS5lKCwQqJAheTumzAy2vEkEFq5Vp?usp=drive_link';
 
 export const resource_list = [
