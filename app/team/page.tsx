@@ -38,7 +38,7 @@ const page = () => {
             <div className='w-full flex justify-center text-center mt-5 gap-2 bg-gray-100 p-4 flex-col' >
                  <Heading text='Acknowledgment'/>
                 <Textbox customstyle='text-center flex justify-center' Content={<>
-                    <p>We thank Monika K., Vipin Kumar, Ramya K.A., Amina Shahab from Water and Soil Lab for their contribution to water quality analysis. We also sincerly thank Ashoka Trust for Research in Ecology and the Environment (ATREE) for their support and our funding partner HSBC Foundation.</p>
+                    <p>We thank Monika K., Vipin Kumar, Ramya K.A., Amina Shahab from Water and Soil Lab for their contribution to water quality analysis. We also sincerly thank Ashoka Trust for Research in Ecology and the Environment (ATREE) for the support.</p>
                     </>}></Textbox>
             </div>
 
