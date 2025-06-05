@@ -98,17 +98,20 @@ export const resource_list = [
     {
         resource_title: "SoP for floating islands",
         resource_sub_title: "Standard operating procedure on design, deployment and maintenance & monitoring of floating islands",
-        resource_URL: "https://drive.google.com/file/d/1ABXYa7IyRMwqWjGcRmofobj6j5_4BnF6/view?usp=drive_link",
+       // resource_URL: "https://drive.google.com/file/d/1ABXYa7IyRMwqWjGcRmofobj6j5_4BnF6/view?usp=drive_link",
+        resource_URL: "https://drive.google.com/drive/folders/1Ya1dS5lKCwQqJAheTumzAy2vEkEFq5Vp?usp=drive_link",
     },
     {                                                                                                                                                                                                                                                                                       
         resource_title: "SoP for constructed wetlands",
         resource_sub_title: "Standard operating procedure for constructed wetland planning, design, implementation and operation & maintenance",
-        resource_URL: "https://drive.google.com/file/d/1JsTPfGCYTBgQ4PhxybCJB6MbDh71EsBX/view?usp=drive_link",
+        //resource_URL: "https://drive.google.com/file/d/1JsTPfGCYTBgQ4PhxybCJB6MbDh71EsBX/view?usp=drive_link",
+        resource_URL: "https://drive.google.com/drive/folders/1-0LF8MFjuEU3z3plIk9AhrvuIP31tCAP?usp=drive_link",
     },
     {                                                                                                                                                                                                                                                                                       
         resource_title: "SoP for shoreline rehabilitation",
         resource_sub_title: "Standard operating procedure for shoreline rejuvenation",
-        resource_URL: "https://drive.google.com/file/d/1ED_JNrejP6SE19MRDc77SKrBYQop2Oz0/view?usp=drive_link",
+        // resource_URL: "https://drive.google.com/file/d/1ED_JNrejP6SE19MRDc77SKrBYQop2Oz0/view?usp=drive_link",
+        resource_URL: "https://drive.google.com/drive/folders/13y2g8Gs9LjqmOkmDXah8RB8IjhOeDidQ?usp=drive_link",
     },
     {                                                                                                                                                                                                                                                                                       
         resource_title: "O&M manual for floating islands vegetation",
