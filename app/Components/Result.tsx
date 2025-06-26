@@ -20,7 +20,7 @@ type resultprobs = {
 const Result = ({ title, area = '0', percent, images, btn_link, description, handlesingleslide }: resultprobs) => {
 
     return (
-        <div className='flex flex-col flex-wrap p-4 w-[350px] sm:w-[500px] border-2 border-gray-200 shadow-2xl rounded-2xl'>
+        <div className='flex flex-col flex-wrap p-4 w-[350px] md:w-[300px] sm:w-[25vw] border-2 border-gray-200 shadow-2xl rounded-2xl'>
 
             {/*sroll image */}
             <div className='w-full ' >

@@ -79,7 +79,7 @@ const Navbar = ({ currentpage }: navprobs) => {
                         {/* overlay */}
 
 
-                        <NavbarMobile customClass={`${isopen ? "-translate-x-150" : "translate-x-0"} `} clickfunction={handlemenu} handlelanguage={handlelanguage} />
+                        <NavbarMobile customClass={`${isopen ? "-translate-x-150 hidden " : "translate-x-0"} `} clickfunction={handlemenu} handlelanguage={handlelanguage} />
                     </div>
 
                 </div><div className={`lg:hidden w-screen h-[20500px] absolute bg-gray-500 opacity-20 transform transition-transform  duration-400 ease-in-out z-90 
