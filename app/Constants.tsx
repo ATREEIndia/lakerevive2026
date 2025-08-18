@@ -132,6 +132,11 @@ export const resource_list = [
         resource_title: "How healthy is your lake? ",
         resource_sub_title: "Video for some easy ways to monitor a lake's health using a Secchi Disk and a Dissolved Oxygen (DO) measuring device",
         resource_URL: "https://www.youtube.com/watch?v=QGAwMq_VobI",
+    },
+    {                                                                                                                                                                                                                                                                                       
+        resource_title: "How to use the tool? ",
+        resource_sub_title: "Video demonstrating how to use the lake revive tool",
+        resource_URL: "https://youtu.be/d4t6W4OjW0g",
     }
 ]
 
