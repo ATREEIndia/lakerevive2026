@@ -43,6 +43,7 @@ const Slider = ({ images, handlesingleslide , custom_class='h-[300px]'}: sliderp
                 {images.map((img, index) => (
                     <div key={index} className={`relative  flex flex-col ${custom_class}`} >
                         <Image
+                        unoptimized
                             src={img}
                             alt={`Image ${index + 1}`}
                             fill
