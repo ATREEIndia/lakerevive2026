@@ -29,6 +29,17 @@ import fionly_img from '@/public/fi_only.jpg'
 
 const page = () => {
   //input
+  const [Input_email_verify, SetinputEmailVerify] = useState('')
+  const [Input_otp, Setinputotp] = useState('')
+  const [GeneratedOTP, setGeneratedOTP] = useState('')
+
+  const [isemailverified, Setisemailverified] = useState(false)
+  const [isOTPwrong, SetisOTPwrong] = useState(false)
+
+  const [isOtpSend, SetisOtpsend] = useState(false)
+  const [isClikedVerify, SetisClickedVerify] = useState(false)
+
+
   const [Input_lakename, Setlakename] = useState("");
   const [Input_email, Setemail] = useState("");
   const [Input_inflowrate, Setinflowrate] = useState(0);
@@ -94,6 +105,92 @@ const page = () => {
   const [showsingleslider, Setshowsingleslider] = useState(false);
   const [single_slider_imgs, Setsingle_slider_imgs] = useState<any[]>([]);
 
+
+  const sendOTP = async () => {
+
+    const email = Input_email_verify.trim();
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      alert("Please enter your email.");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      Setisemailvalid(false)
+      return;
+    }
+    Setisemailvalid(true)
+
+    if (isClikedVerify) {
+      return
+    }
+    SetisClickedVerify(true)
+
+    // Generate 4-digit OTP
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+
+    try {
+      const response = await fetch(
+        `https://script.google.com/macros/s/AKfycbxw6aZRKQd62HfdPuy5p9sqIJSlG6VRZY0QJpNHOJ-GvhcRY0f5MupAXmKxeUnsDElI/exec?email=${encodeURIComponent(email)}&otp=${otp}`
+      );
+
+      const result = await response.text();
+
+      if (result === "OTP sent successfully") {
+        setGeneratedOTP(otp);
+        SetisOtpsend(true)
+      } else {
+        alert("Failed to send OTP.");
+        SetisOtpsend(false)
+        SetisClickedVerify(false)
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong.");
+      SetisOtpsend(false)
+      SetisClickedVerify(false)
+    }
+  };
+
+  const VerifyOTP = () => {
+    if (GeneratedOTP === Input_otp) {
+      Setisemailverified(true)
+      Setemail(Input_email_verify)
+      SetisOTPwrong(false)
+      localStorage.setItem('isLakeToolEmailVerified', 'true');
+      localStorage.setItem('lakeToolVerifiedEmail', Input_email_verify);
+
+    } else {
+      Setisemailverified(false)
+      SetisOTPwrong(true)
+    }
+  }
+
+  useEffect(() => {
+    // This runs only on the client side after mounting
+    const savedVerification = localStorage.getItem('isLakeToolEmailVerified');
+    const savedEmail = localStorage.getItem('lakeToolVerifiedEmail');
+
+    if (savedVerification === 'true' && savedEmail) {
+      Setisemailverified(true);
+      Setemail(savedEmail);
+      SetinputEmailVerify(savedEmail);
+
+    }
+  }, []);
+
+  const handleSignOut = () => {
+    localStorage.removeItem('isLakeToolEmailVerified');
+    localStorage.removeItem('lakeToolVerifiedEmail');
+    Setisemailverified(false);
+    Setemail('');
+    SetinputEmailVerify('');
+    SetisOtpsend(false);
+  };
+
   function handle_singleslide(images: any[]) {
     Setsingle_slider_imgs(images)
     console.log("handle_singleslide triggred")
@@ -105,9 +202,20 @@ const page = () => {
     const val = (e.target.value);
     Setlakename(val);
   }
+  function updateEmail_verify(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value;
+    SetinputEmailVerify(val)
+
+  }
+  function updateotp(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value;
+    Setinputotp(val)
+
+  }
+
   function updateEmail(e: React.ChangeEvent<HTMLInputElement>) {
     const val = e.target.value;
-    Setemail(val)
+    //Setemail(val)
 
   }
   function updateInflowrate(e: React.ChangeEvent<HTMLInputElement>) {
@@ -274,14 +382,14 @@ const page = () => {
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
         Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(1))
-        if(Result_percent_area_of_lake_covered_by_fi>0){
-        Setshowfi(true);
-        Setshowcw(false);
-       
+        if (Result_percent_area_of_lake_covered_by_fi > 0) {
+          Setshowfi(true);
+          Setshowcw(false);
 
-        } 
+
+        }
         Setshowresult(true)
-        
+
 
 
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
@@ -325,15 +433,15 @@ const page = () => {
 
         Set_result_fi_area(Math.ceil(Result_area_req_fi).toFixed(0))
         Set_result_fi_percent(Result_percent_area_of_lake_covered_by_fi.toFixed(1))
-        if(Result_percent_area_of_lake_covered_by_fi>0){
-        Setshowfi(true);
-        Setshowcw(false);
-        Setshowresult(true)
+        if (Result_percent_area_of_lake_covered_by_fi > 0) {
+          Setshowfi(true);
+          Setshowcw(false);
+          Setshowresult(true)
 
         }
         // Setshowfi(true);
         // Setshowcw(false);
-       Setshowresult(true)
+        Setshowresult(true)
 
         console.log('Result_area_req_fi= ' + Result_area_req_fi)
         console.log('Result_percent_area_of_lake_covered_by_fi= ' + Result_percent_area_of_lake_covered_by_fi)
@@ -418,7 +526,7 @@ const page = () => {
       console.log("Result_percent_total_area_covered= " + Result_percent_total_area_covered)
       console.log("Remarks= " + Remarks)
 
-       
+
 
 
 
@@ -451,36 +559,36 @@ const page = () => {
   useEffect(() => {
     if (showresult) {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-          
+
     }
 
 
   }, [showresult])
 
- useEffect(() => {
-  let result = '';
+  useEffect(() => {
+    let result = '';
 
-  if (showcw && showfi) {
-    result = 'Combination of constructed wetland and floating island is required';
-  } else if (!showcw && showfi) {
-    result = 'Only floating island is sufficient';
-  } else if (showcw && !showfi) {
-    result = 'Only constructed wetland is sufficient';
-  } else {
-    result = 'NbS is not feasible';
-  }
+    if (showcw && showfi) {
+      result = 'Combination of constructed wetland and floating island is required';
+    } else if (!showcw && showfi) {
+      result = 'Only floating island is sufficient';
+    } else if (showcw && !showfi) {
+      result = 'Only constructed wetland is sufficient';
+    } else {
+      result = 'NbS is not feasible';
+    }
 
-  Setfinal_result(result);
-  if(showresult){
-    sendtosheet(result)
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-  }
- 
- 
-}, [showresult, result_CW_area,result_fi_area, showcw, showfi]);
+    Setfinal_result(result);
+    if (showresult) {
+      sendtosheet(result)
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
 
-  function sendtosheet(result:string) {
-   
+
+  }, [showresult, result_CW_area, result_fi_area, showcw, showfi]);
+
+  function sendtosheet(result: string) {
+
 
     let parameters = `email=${Input_email}&lakename=${encodeURIComponent(Input_lakename)}&ld=${Input_lakedepth}&wsa=${Input_lakearea}&isfesarea=${isareaavaiable}&fesarea=${Input_cwArea}&fesdepth=${Input_feasible_depth}&isinflow=${isinflowavilable}&inflowrate=${Input_inflowrate}&inflowtp=${Input_inflowtp}&laketp=${Input_laketp}&secchi=${Input_secchidepth}&result=${result}&res_cwarea=${result_CW_area}&res_cwpercent=${result_CW_percent}&res_fiarea=${result_fi_area}&res_fipercent=${result_fi_percent}&fishkill=${obs_fishkill}&algalbloom=${obs_alga}&sewage=${obs_sewage}&floatingveg=${obs_floaringveg}&foam=${obs_foam}`;
 
@@ -738,6 +846,48 @@ const page = () => {
     <div className='w-full relative'>
       <Navbar currentpage='Tool'></Navbar>
 
+      {!isemailverified && <div className='fixed inset-0 bg-black/60 flex items-center justify-center z-500'>
+        <div className='bg-white rounded-xl shadow-xl p-4 flex flex-col gap-2 max-w-[90vw] md:max-w-[35vw]'>
+          <h1 className='text-xl font-semibold'>Verify Your Email ✉</h1>
+
+
+          <p className='text-sm text-gray-500'>  Please verify your email address to continue. This is a one-time verification step to ensure genuine usage of the tool. </p>
+
+          {/* Email */}
+          {!isOtpSend && <div className='flex flex-col gap-2'>
+            <div>
+              <Inputitem title={'Email'} type='email' value={Input_email_verify} updatefunction={updateEmail_verify} ></Inputitem>
+              <div className='w-full flex flex-col justify-center items-center '>
+                <p className={`w-[90%] px-2 text-sm text-red-700  ${isemailvalid ? 'hidden' : 'block'}`}>Please Enter a valid Email address</p>
+              </div>
+            </div>
+
+            <div className={`w-full flex text-end justify-end items-center  align-middle ${Input_email_verify.length < 1 ? 'hidden' : ""}`}>
+              <span onClick={sendOTP} className={` rounded-2xl px-4 cursor-pointer py-2  select-none ${!isClikedVerify ? 'bg-[#1e8989] text-white border-2 hover:text-[#1e8989] hover:bg-white active:scale-95' : "text-[#1e8989]"}`}> {!isClikedVerify ? 'Verify' : "Sending OTP"} </span>
+              <p className={`animate animate-spin ${!isClikedVerify ? 'hidden' : 'flex'}`}>҉</p>
+            </div>
+          </div>}
+
+
+
+          {/* OTP */}
+          {isOtpSend && <div className='w-full flex flex-col gap-2'>
+            <h1 className='text-gray-600 text-sm w-full text-center'>OTP Send to <span className='text-[#1e8989] font-semibold'>{Input_email_verify}</span></h1>
+            <Inputitem title={'Enter verification code'} type='number' value={Input_otp} updatefunction={updateotp} ></Inputitem>
+            <div className='w-full flex flex-col justify-center items-center '>
+              <p className={`w-[90%] px-2 text-sm text-red-700  ${!isOTPwrong ? 'hidden' : 'block'}`}>Wrong OTP</p>
+            </div>
+            <div className={`w-full flex text-end justify-end   align-middle ${Input_otp.length < 4 ? 'hidden' : 'flex'}`}>
+              <span onClick={VerifyOTP} className='border-2 rounded-2xl px-4 cursor-pointer py-2 bg-[#1e8989] text-white hover:text-[#1e8989] hover:bg-white active:scale-95 select-none'> Submit</span>
+            </div>
+          </div>}
+
+
+        </div>
+
+
+      </div>}
+
       <Banner title='NbS design tool'></Banner>
       <div className='w-full p-4 flex flex-col gap-2 sm:flex-row justify-between bg-[#fffdfc] '>
 
@@ -753,8 +903,13 @@ const page = () => {
               <Inputitem title={'Name of the lake'} type='text' value={Input_lakename} updatefunction={updateLakeName} custom_class={`${islakenamevalid ? '' : 'border-red-400'}`}></Inputitem>
             </div>
 
-            <div className='w-full flex flex-col my-4 gap-6'>
-              <Inputitem title={'Enter your email'} type='email' value={Input_email} updatefunction={updateEmail} custom_class={`${isemailvalid ? '' : 'border-red-400'}`}></Inputitem>
+            <div className={`w-full flex flex-col my-4  ${isemailverified ? '' : 'hidden'} `}>
+
+              <Inputitem title={'Your email ✅'} disable_status={false} type='email' value={Input_email} updatefunction={updateEmail} custom_class={`bg-gray-100 select-none ${isemailvalid ? '' : 'border-red-400 '}`}></Inputitem>
+              <div className='w-full flex justify-end px-8'>
+                <p onClick={handleSignOut} className='text-blue-700 cursor-pointer hover:font-semibold active:scale-90'>Update Email</p>
+
+              </div>
             </div>
 
 
@@ -775,7 +930,7 @@ const page = () => {
                   <Inputitem title={'Area available - Constructed wetland (m²)'} disable_status={!isareaavaiable} value={Input_cwArea > 0 ? Input_cwArea : ''} updatefunction={updateCWArea}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_cwArea > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => {Setisareaavailabe(!isareaavaiable);Setisdepthvailabe(!isareaavaiable)} } >{isareaavaiable ? 'Area not available' : 'Area available'}</p>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => { Setisareaavailabe(!isareaavaiable); Setisdepthvailabe(!isareaavaiable) }} >{isareaavaiable ? 'Area not available' : 'Area available'}</p>
                 </div>
               </div>
 
@@ -791,7 +946,7 @@ const page = () => {
                   <Inputitem title={'Feasible depth -  Constructed wetland (m)'} disable_status={!isdepthAvaiable} value={Input_feasible_depth >= 0.5 ? Input_feasible_depth : ""} updatefunction={updatefeasibledepth}></Inputitem>
                 </div>
                 <div className={` justify-end px-8 mt-4 ${Input_feasible_depth > 0 ? 'hidden' : 'flex'}`}>
-                  <p className='text-blue-600 cursor-pointer' onClick={() => {Setisdepthvailabe(!isdepthAvaiable)}} >{isdepthAvaiable ? 'Feasible depth not available' : 'Feasible depth available'}</p>
+                  <p className='text-blue-600 cursor-pointer' onClick={() => { Setisdepthvailabe(!isdepthAvaiable) }} >{isdepthAvaiable ? 'Feasible depth not available' : 'Feasible depth available'}</p>
                 </div>
               </div>
 
