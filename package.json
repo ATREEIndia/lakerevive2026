@@ -12,9 +12,9 @@
     "@vercel/analytics": "^1.5.0",
     "framer-motion": "^12.12.1",
     "lottie-react": "^2.4.1",
-    "next": "15.3.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "next": "15.5.19",
+    "react": "^19.1.7",
+    "react-dom": "^19.1.7",
     "react-icons": "^5.5.0",
     "react-multi-carousel": "^2.8.6"
   },
