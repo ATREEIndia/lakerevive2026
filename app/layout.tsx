@@ -6,6 +6,7 @@ import Footer from "./Components/Footer";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next"
 import { Languageprovider } from "./Components/Languagecontex";
+import FloatingButton from "./Components/FloatingButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${getpoppins.className} antialiased  `}
       >
         <Languageprovider>
+
+          <FloatingButton/>
        
         {children}
         </Languageprovider>
