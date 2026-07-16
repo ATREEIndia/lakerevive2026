@@ -873,6 +873,7 @@ const page = () => {
           {/* OTP */}
           {isOtpSend && <div className='w-full flex flex-col gap-2'>
             <h1 className='text-gray-600 text-sm w-full text-center'>OTP Send to <span className='text-[#1e8989] font-semibold'>{Input_email_verify}</span></h1>
+           <p>Please check your Spam folder as well, in case you don't see it in your inbox.</p>
             <Inputitem title={'Enter verification code'} type='number' value={Input_otp} updatefunction={updateotp} ></Inputitem>
             <div className='w-full flex flex-col justify-center items-center '>
               <p className={`w-[90%] px-2 text-sm text-red-700  ${!isOTPwrong ? 'hidden' : 'block'}`}>Wrong OTP</p>
