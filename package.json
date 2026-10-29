@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@arcgis/core": "^4.34.8",
     "@vercel/analytics": "^1.5.0",
     "framer-motion": "^12.12.1",
     "lottie-react": "^2.4.1",
