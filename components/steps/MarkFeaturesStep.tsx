@@ -4,11 +4,12 @@ import { useLake } from "@/context/LakeContext";
 import { POINT_TOLERANCE_M } from "@/lib/constants";
 import type { FeatureKind } from "@/lib/types";
 import { Alert, Button, Card, StepFooter, StepHeading, formatArea } from "../ui";
+import { div, h1 } from "framer-motion/client";
 
 const TOOLS: { kind: FeatureKind; label: string; swatch: string; activeRing: string; description: string }[] = [
   {
     kind: "lake",
-    label: "Lake boundary",
+    label: " Manually draw Lake boundary",
     swatch: "bg-blue-600/40 border-2 border-blue-700 rounded-sm",
     activeRing: "border-blue-500 ring-blue-100",
     description: "Click around the shoreline, double-click to finish. Redrawing replaces it.",
@@ -31,7 +32,7 @@ const TOOLS: { kind: FeatureKind; label: string; swatch: string; activeRing: str
 
 export default function MarkFeaturesStep() {
   const { state, dispatch } = useLake();
-  const { features, activeTool, selected, measurements, history, pendingLake } = state;
+  const { features, activeTool, detectingLake, selected, measurements, history, pendingLake } = state;
 
   const counts: Record<FeatureKind, number> = {
     lake: features.lake ? 1 : 0,
@@ -60,30 +61,61 @@ export default function MarkFeaturesStep() {
           const active = activeTool === tool.kind;
           const awaitingConfirm = tool.kind === "lake" && pendingLake !== null;
           return (
-            <button
-              key={tool.kind}
-              type="button"
-              aria-pressed={active}
-              onClick={() => dispatch({ type: "SET_TOOL", tool: active ? null : tool.kind })}
-              className={`flex w-full items-center gap-3 rounded-xl border bg-white px-3 py-3 text-left transition focus-visible:outline-2 focus-visible:outline-teal-600 ${
-                active ? `${tool.activeRing} ring-4` : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
-              }`}
-            >
-              <span aria-hidden className={`h-4 w-4 shrink-0 ${tool.swatch}`} />
-              <span className="flex-1">
-                <span className="block text-sm font-medium text-slate-900">{tool.label}</span>
-                <span className={`block text-xs ${awaitingConfirm ? "font-medium text-blue-700" : "text-slate-500"}`}>
-                  {awaitingConfirm
-                    ? "Confirm or redraw the boundary on the map."
-                    : active
-                      ? "Drawing… click to stop"
-                      : tool.description}
+            <div key={tool.kind} className="space-y-2">
+
+             <div className="p-2 border-2 border-gray-200 rounded-2xl space-y-1">
+               {tool.kind === "lake" && ( 
+                
+                <div>
+                  <h1 className="text-sm font-semibold">Lake Boundary</h1>
+
+                
+                <button
+                  type="button"
+                  aria-pressed={detectingLake}
+                  onClick={() => dispatch({ type: "SET_DETECTING", detecting: !detectingLake })}
+                  className={` flex w-full bg-white items-center gap-2 rounded-lg border  px-3 py-2 text-left text-xs ring-blue-600 transition focus-visible:outline-2 focus-visible:outline-teal-600 ${detectingLake ? "border-blue-500 ring-4 ring-blue-100" : "border-slate-200 hover:border-slate-300   hover:bg-slate-50"
+                    }`}
+                >
+                  <span aria-hidden className="text-xl text-blue-500">✦</span>
+                  <span>
+                    <span className="block font-medium text-slate-900">Detect from map</span>
+                    <span className="block text-slate-500">
+                      {detectingLake
+                        ? "Click inside the lake on the map… click here to stop"
+                        : "Click the lake's water to trace its boundary automatically."}
+                    </span>
+                  </span>
+                </button>
+                <p className="w-full text-center">or</p>
+                </div>
+              )}
+             
+              <button
+                type="button"
+                aria-pressed={active}
+                onClick={() => dispatch({ type: "SET_TOOL", tool: active ? null : tool.kind })}
+                className={`flex w-full items-center gap-3 rounded-xl border bg-white px-3 py-3 text-left transition focus-visible:outline-2 focus-visible:outline-teal-600 ${active ? `${tool.activeRing} ring-4` : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                  }`}
+              >
+                <span aria-hidden className={`h-4 w-4 shrink-0 ${tool.swatch}`} />
+                <span className="flex-1">
+                  <span className="block text-sm font-medium text-slate-900">{tool.label}</span>
+                  <span className={`block text-xs ${awaitingConfirm ? "font-medium text-blue-700" : "text-slate-500"}`}>
+                    {awaitingConfirm
+                      ? "Confirm or redraw the boundary on the map."
+                      : active
+                        ? "Drawing… click to stop"
+                        : tool.description}
+                  </span>
                 </span>
-              </span>
-              <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700 tabular-nums">
-                {counts[tool.kind]}
-              </span>
-            </button>
+                <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700 tabular-nums">
+                  {counts[tool.kind]}
+                </span>
+              </button>
+              </div> 
+             
+            </div>
           );
         })}
       </div>

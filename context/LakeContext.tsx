@@ -21,8 +21,12 @@ export interface LakeState {
   /** Previous feature snapshots for "Undo last". */
   history: LakeFeatures[];
   activeTool: FeatureKind | null;
+  /** Waiting for a click inside water on the map to detect the lake boundary. */
+  detectingLake: boolean;
   /** A just-drawn lake polygon awaiting the user's confirmation. */
   pendingLake: Ring[] | null;
+  /** Whether the pending lake came from detection (so "Redraw" detects again). */
+  pendingDetected: boolean;
   selected: SelectedFeature | null;
   measurements: LakeMeasurements;
   parameters: LakeParameters | null;
@@ -34,10 +38,11 @@ export type LakeAction =
   | { type: "GO_TO_STEP"; step: Step }
   | { type: "SET_LOCATION"; location: LocationInfo }
   | { type: "SET_TOOL"; tool: FeatureKind | null }
+  | { type: "SET_DETECTING"; detecting: boolean }
   /** Replaces the lake directly (used when reshaping an existing boundary). */
   | { type: "SET_LAKE"; rings: Ring[] }
   /** A newly drawn boundary; it is only applied once confirmed. */
-  | { type: "PROPOSE_LAKE"; rings: Ring[] }
+  | { type: "PROPOSE_LAKE"; rings: Ring[]; detected?: boolean }
   | { type: "CONFIRM_LAKE" }
   | { type: "DISCARD_LAKE"; redraw: boolean }
   | { type: "ADD_POINT"; kind: "inlet" | "outlet"; id: string; lng: number; lat: number }
@@ -61,7 +66,9 @@ const initialState: LakeState = {
   features: EMPTY_FEATURES,
   history: [],
   activeTool: null,
+  detectingLake: false,
   pendingLake: null,
+  pendingDetected: false,
   selected: null,
   measurements: { areaM2: null, farPointIds: [] },
   parameters: null,
@@ -85,20 +92,41 @@ function editFeatures(state: LakeState, features: LakeFeatures): LakeState {
 function reducer(state: LakeState, action: LakeAction): LakeState {
   switch (action.type) {
     case "GO_TO_STEP":
-      return { ...state, step: action.step, activeTool: null, selected: null, pendingLake: null };
+      return { ...state, step: action.step, activeTool: null, detectingLake: false, selected: null, pendingLake: null };
     case "SET_LOCATION":
       return { ...state, location: action.location };
     case "SET_TOOL":
-      return { ...state, activeTool: action.tool, selected: null, pendingLake: null };
+      return { ...state, activeTool: action.tool, detectingLake: false, selected: null, pendingLake: null };
+    case "SET_DETECTING":
+      // Detection reads water colour, which only the topographic basemap shows clearly.
+      return {
+        ...state,
+        detectingLake: action.detecting,
+        activeTool: null,
+        selected: null,
+        pendingLake: null,
+        basemap: action.detecting ? "arcgis/topographic" : state.basemap,
+      };
     case "SET_LAKE":
       return editFeatures(state, { ...state.features, lake: action.rings });
     case "PROPOSE_LAKE":
-      return { ...state, activeTool: null, pendingLake: action.rings };
+      return {
+        ...state,
+        activeTool: null,
+        detectingLake: false,
+        pendingLake: action.rings,
+        pendingDetected: Boolean(action.detected),
+      };
     case "CONFIRM_LAKE":
       if (!state.pendingLake) return state;
       return { ...editFeatures(state, { ...state.features, lake: state.pendingLake }), pendingLake: null };
     case "DISCARD_LAKE":
-      return { ...state, pendingLake: null, activeTool: action.redraw ? "lake" : null };
+      return {
+        ...state,
+        pendingLake: null,
+        activeTool: action.redraw && !state.pendingDetected ? "lake" : null,
+        detectingLake: action.redraw && state.pendingDetected,
+      };
     case "ADD_POINT": {
       const key = pointsKey(action.kind);
       const point = { id: action.id, lng: action.lng, lat: action.lat };

@@ -6,7 +6,7 @@ import ArcGISMap from "@arcgis/core/Map";
 import PopupTemplate from "@arcgis/core/PopupTemplate";
 import Extent from "@arcgis/core/geometry/Extent";
 import type Point from "@arcgis/core/geometry/Point";
-import type Polygon from "@arcgis/core/geometry/Polygon";
+import Polygon from "@arcgis/core/geometry/Polygon";
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import SimpleFillSymbol from "@arcgis/core/symbols/SimpleFillSymbol";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
@@ -26,6 +26,7 @@ import {
   ringsFromPolygon,
 } from "@/lib/geo";
 import type { Basemap, FeatureKind } from "@/lib/types";
+import { traceWater } from "@/lib/waterDetect";
 import { Button, formatArea } from "./ui";
 
 const KINDS: FeatureKind[] = ["lake", "inlet", "outlet"];
@@ -83,6 +84,16 @@ const TOOL_HINTS: Record<FeatureKind, string> = {
   inlet: "Click on the map to add inlets. Press Esc or click the tool again when done.",
   outlet: "Click on the map to add outlets. Press Esc or click the tool again when done.",
 };
+
+const DETECT_HINT = "Click inside the lake's blue water to trace its boundary. Esc cancels.";
+
+const DETECT_ERRORS = {
+  "not-water": "That spot isn't water on the map. Click inside the blue area of the lake.",
+  "too-small": "The water area there is too small to trace. Zoom in and try again.",
+};
+
+const DETECT_EDGE_WARNING =
+  "The lake runs off the edge of the map view, so the boundary is cut off there. Zoom out and detect again to capture all of it.";
 
 interface MapObjects {
   view: EsriMapView;
@@ -157,6 +168,7 @@ export default function MapView() {
   const objects = useRef<MapObjects | null>(null);
   const latest = useRef(state);
   const [ready, setReady] = useState(false);
+  const [detect, setDetect] = useState<{ busy: boolean; error: string | null }>({ busy: false, error: null });
   const [error, setError] = useState<string | null>(
     ARCGIS_API_KEY ? null : "No ArcGIS API key found. Add NEXT_PUBLIC_ARCGIS_API_KEY to .env.local and restart the dev server.",
   );
@@ -265,9 +277,47 @@ export default function MapView() {
       ];
     });
 
+    // Traces the water body under a click on the basemap and proposes it as the lake.
+    const detectLake = async (screenX: number, screenY: number) => {
+      setDetect({ busy: true, error: null });
+      try {
+        const baseLayers = view.map?.basemap?.baseLayers.toArray() ?? [];
+        const { data } = await view.takeScreenshot({ format: "png", layers: baseLayers });
+        const scaleX = data.width / view.width;
+        const scaleY = data.height / view.height;
+        const trace = traceWater(data, screenX * scaleX, screenY * scaleY);
+        if (destroyed) return;
+        if (!trace.ok) {
+          setDetect({ busy: false, error: DETECT_ERRORS[trace.reason] });
+          return;
+        }
+        // Screen rings run clockwise with y down, which is anticlockwise on the map.
+        const ring = trace.ring
+          .map(([x, y]) => view.toMap({ x: x / scaleX, y: y / scaleY }))
+          .map((p) => [p.x, p.y])
+          .reverse();
+        const rings = ringsFromPolygon(
+          new Polygon({ rings: [[...ring, ring[0]]], spatialReference: view.spatialReference }),
+        );
+        if (!rings) {
+          setDetect({ busy: false, error: DETECT_ERRORS["too-small"] });
+          return;
+        }
+        setDetect({ busy: false, error: trace.touchesEdge ? DETECT_EDGE_WARNING : null });
+        dispatch({ type: "PROPOSE_LAKE", rings, detected: true });
+      } catch {
+        if (!destroyed) setDetect({ busy: false, error: "Couldn't read the map. Wait for it to finish loading and try again." });
+      }
+    };
+
     // Selecting a feature to move/reshape it (Step 2 only, when no draw tool is active).
     handles.push(
       view.on("click", async (event) => {
+        if (latest.current.detectingLake) {
+          event.stopPropagation();
+          detectLake(event.x, event.y);
+          return;
+        }
         const { step, activeTool, pendingLake } = latest.current;
         if (step !== 2 || activeTool || pendingLake) return;
         const hit = await view.hitTest(event, { include: [layers.inlet, layers.outlet, layers.lake] });
@@ -361,6 +411,21 @@ export default function MapView() {
     KINDS.forEach((k) => sketch[k].cancel());
     if (activeTool) sketch[activeTool].create(activeTool === "lake" ? "polygon" : "point");
   }, [ready, activeTool]);
+
+  // Lake detection mode: crosshair cursor, Esc to cancel, and stale messages cleared on start.
+  const { detectingLake } = state;
+  useEffect(() => {
+    if (!ready || !objects.current || !detectingLake) return;
+    const container = objects.current.view.container;
+    setDetect({ busy: false, error: null });
+    if (container) container.style.cursor = "crosshair";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && dispatch({ type: "SET_DETECTING", detecting: false });
+    window.addEventListener("keydown", onKey);
+    return () => {
+      if (container) container.style.cursor = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [ready, detectingLake, dispatch]);
 
   // A just-drawn lake awaiting confirmation: dashed outline plus its area.
   const { pendingLake } = state;
@@ -480,11 +545,30 @@ export default function MapView() {
         </div>
       )}
 
+      {ready && (detectingLake || (detect.error && pendingLake && state.pendingDetected)) && (
+        <div className="pointer-events-none absolute inset-x-0 top-14 flex flex-col items-center gap-2 px-4">
+          {detectingLake && (
+            <p className="rounded-full bg-slate-900/80 px-4 py-2 text-center text-xs text-white shadow">
+              {detect.busy ? "Tracing water boundary…" : DETECT_HINT}
+            </p>
+          )}
+          {detect.error && (
+            <p role="alert" className="max-w-md rounded-xl bg-amber-50 px-4 py-2 text-center text-xs text-amber-900 shadow">
+              {detect.error}
+            </p>
+          )}
+        </div>
+      )}
+
       {ready && pendingLake && (
         <ConfirmLakeDialog
           areaM2={pendingArea}
+          detected={state.pendingDetected}
           replacing={features.lake !== null}
-          onConfirm={() => dispatch({ type: "CONFIRM_LAKE" })}
+          onConfirm={() => {
+            setDetect({ busy: false, error: null });
+            dispatch({ type: "CONFIRM_LAKE" });
+          }}
           onRedraw={() => dispatch({ type: "DISCARD_LAKE", redraw: true })}
           onDiscard={() => dispatch({ type: "DISCARD_LAKE", redraw: false })}
         />
@@ -497,12 +581,13 @@ export default function MapView() {
 
 function ConfirmLakeDialog(props: {
   areaM2: number | null;
+  detected: boolean;
   replacing: boolean;
   onConfirm: () => void;
   onRedraw: () => void;
   onDiscard: () => void;
 }) {
-  const { areaM2, replacing, onConfirm, onRedraw, onDiscard } = props;
+  const { areaM2, detected, replacing, onConfirm, onRedraw, onDiscard } = props;
   const area = areaM2 !== null ? formatArea(areaM2) : null;
   return (
     <div className="pointer-events-none absolute inset-x-0 top-[50%] flex justify-center px-4">
@@ -519,12 +604,13 @@ function ConfirmLakeDialog(props: {
         <p id="confirm-lake-desc" className="mt-1 text-xs text-slate-500">
           {area ? `${area.hectares} (${area.squareMetres}).` : "Calculating area…"}{" "}
           {replacing && "This replaces the current boundary."}
+          {detected && " After confirming, click the boundary to drag its vertices into place."}
         </p>
         <div className="mt-3 flex flex-wrap justify-end gap-2">
           <Button variant="ghost" onClick={onDiscard}>
             Discard
           </Button>
-          <Button onClick={onRedraw}>Redraw</Button>
+          <Button onClick={onRedraw}>{detected ? "Try again" : "Redraw"}</Button>
           <Button variant="primary" onClick={onConfirm} autoFocus>
             Confirm boundary
           </Button>
