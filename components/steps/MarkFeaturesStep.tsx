@@ -74,12 +74,12 @@ export default function MarkFeaturesStep() {
                   type="button"
                   aria-pressed={detectingLake}
                   onClick={() => dispatch({ type: "SET_DETECTING", detecting: !detectingLake })}
-                  className={` flex w-full bg-white items-center gap-2 rounded-lg border  px-3 py-2 text-left text-xs ring-blue-600 transition focus-visible:outline-2 focus-visible:outline-teal-600 ${detectingLake ? "border-blue-500 ring-4 ring-blue-100" : "border-slate-200 hover:border-slate-300   hover:bg-slate-50"
+                  className={` flex w-full bg-white items-center gap-2 rounded-lg border  px-3 py-2 text-left text-xs ring-blue-600 transition focus-visible:outline-2 focus-visible:outline-teal-600 ${detectingLake ? "border-blue-500 ring-4 ring-blue-100" : "border-slate-200 hover:border-slate-300   hover:bg-slate-50 mt-3"
                     }`}
                 >
                   <span aria-hidden className="text-xl text-blue-500">✦</span>
-                  <span>
-                    <span className="block font-medium text-slate-900">Detect from map</span>
+                  <span className="">
+                    <span className="block font-medium text-slate-900 ">Detect from map topography</span>
                     <span className="block text-slate-500">
                       {detectingLake
                         ? "Click inside the lake on the map… click here to stop"
@@ -95,12 +95,12 @@ export default function MarkFeaturesStep() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => dispatch({ type: "SET_TOOL", tool: active ? null : tool.kind })}
-                className={`flex w-full items-center gap-3 rounded-xl border bg-white px-3 py-3 text-left transition focus-visible:outline-2 focus-visible:outline-teal-600 ${active ? `${tool.activeRing} ring-4` : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                className={`flex w-full items-center gap-3 rounded-xl  bg-white px-3 py-3 text-left transition focus-visible:outline-2 focus-visible:outline-teal-600 ${active ? `${tool.activeRing} ring-4` : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                   }`}
               >
                 <span aria-hidden className={`h-4 w-4 shrink-0 ${tool.swatch}`} />
                 <span className="flex-1">
-                  <span className="block text-sm font-medium text-slate-900">{tool.label}</span>
+                  <span className="block text-xs font-medium text-slate-900">{tool.label}</span>
                   <span className={`block text-xs ${awaitingConfirm ? "font-medium text-blue-700" : "text-slate-500"}`}>
                     {awaitingConfirm
                       ? "Confirm or redraw the boundary on the map."

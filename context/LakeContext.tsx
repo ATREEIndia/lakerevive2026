@@ -119,7 +119,12 @@ function reducer(state: LakeState, action: LakeAction): LakeState {
       };
     case "CONFIRM_LAKE":
       if (!state.pendingLake) return state;
-      return { ...editFeatures(state, { ...state.features, lake: state.pendingLake }), pendingLake: null };
+      return {
+        ...editFeatures(state, { ...state.features, lake: state.pendingLake }),
+        pendingLake: null,
+        // Detection switched to topographic; return to imagery for adjusting the boundary.
+        basemap: state.pendingDetected ? "arcgis/imagery" : state.basemap,
+      };
     case "DISCARD_LAKE":
       return {
         ...state,

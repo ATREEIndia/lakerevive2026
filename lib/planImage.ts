@@ -93,7 +93,7 @@ export async function buildPlanImage(mapDataUrl: string, summary: PlanSummary): 
 
   ctx.fillStyle = "#94a3b8";
   ctx.font = font(u * 0.75);
-  ctx.fillText(`Lake Treatment Planner · ${new Date().toISOString().slice(0, 10)} · Basemap © Esri`, pad, y);
+  ctx.fillText(`https://lakerevive.atree.org · ${new Date().toISOString().slice(0, 10)} · Basemap © Esri`, pad, y);
 
   return new Promise((resolve, reject) =>
     canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("Could not create image."))), "image/png"),
