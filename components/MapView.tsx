@@ -135,6 +135,11 @@ function reconcile(layer: GraphicsLayer, svm: SketchViewModel, symbol: Graphic["
   );
 }
 
+/** Finishes any move/reshape in progress, which commits it to app state via the update event. */
+function saveEdits(sketch: MapObjects["sketch"]) {
+  KINDS.forEach((k) => sketch[k].updateGraphics.length && sketch[k].complete());
+}
+
 function labelGraphic(point: Point, text: string) {
   return new Graphic({
     geometry: point,
@@ -169,6 +174,8 @@ export default function MapView() {
   const latest = useRef(state);
   const [ready, setReady] = useState(false);
   const [detect, setDetect] = useState<{ busy: boolean; error: string | null }>({ busy: false, error: null });
+  /** Set when a detected lake is confirmed, so it opens for reshaping once drawn. */
+  const editLakeOnDraw = useRef(false);
   const [error, setError] = useState<string | null>(
     ARCGIS_API_KEY ? null : "No ArcGIS API key found. Add NEXT_PUBLIC_ARCGIS_API_KEY to .env.local and restart the dev server.",
   );
@@ -400,14 +407,15 @@ export default function MapView() {
       layers.location.add(new Graphic({ geometry: mercatorPoint(location.lng, location.lat), symbol: SYMBOLS.location }));
     }
     layers.islands.visible = step === 4;
-    if (step !== 2) KINDS.forEach((k) => sketch[k].updateGraphics.length && sketch[k].complete());
+    if (step !== 2) saveEdits(sketch);
   }, [ready, location, step]);
 
-  // Start/stop drawing when the active tool changes.
+  // Start/stop drawing when the active tool changes. Edits in progress are saved, not discarded.
   const { activeTool } = state;
   useEffect(() => {
     if (!ready || !objects.current) return;
     const { sketch } = objects.current;
+    saveEdits(sketch);
     KINDS.forEach((k) => sketch[k].cancel());
     if (activeTool) sketch[activeTool].create(activeTool === "lake" ? "polygon" : "point");
   }, [ready, activeTool]);
@@ -416,6 +424,7 @@ export default function MapView() {
   const { detectingLake } = state;
   useEffect(() => {
     if (!ready || !objects.current || !detectingLake) return;
+    saveEdits(objects.current.sketch);
     const container = objects.current.view.container;
     setDetect({ busy: false, error: null });
     if (container) container.style.cursor = "crosshair";
@@ -458,6 +467,12 @@ export default function MapView() {
       SYMBOLS.lake,
       lake ? [{ id: "lake", key: JSON.stringify(lake), geometry: mercatorPolygon(lake) }] : [],
     );
+    // A detected boundary is only a first draft, so open it for vertex editing straight away.
+    const lakeGraphic = layers.lake.graphics.at(0);
+    if (editLakeOnDraw.current && lakeGraphic) {
+      editLakeOnDraw.current = false;
+      sketch.lake.update(lakeGraphic).catch(() => {});
+    }
     for (const kind of ["inlet", "outlet"] as const) {
       const points = kind === "inlet" ? features.inlets : features.outlets;
       reconcile(
@@ -567,6 +582,7 @@ export default function MapView() {
           replacing={features.lake !== null}
           onConfirm={() => {
             setDetect({ busy: false, error: null });
+            editLakeOnDraw.current = state.pendingDetected;
             dispatch({ type: "CONFIRM_LAKE" });
           }}
           onRedraw={() => dispatch({ type: "DISCARD_LAKE", redraw: true })}
@@ -604,7 +620,7 @@ function ConfirmLakeDialog(props: {
         <p id="confirm-lake-desc" className="mt-1 text-xs text-slate-500">
           {area ? `${area.hectares} (${area.squareMetres}).` : "Calculating area…"}{" "}
           {replacing && "This replaces the current boundary."}
-          {detected && " After confirming, click the boundary to drag its vertices into place."}
+          {detected && " After confirming, drag its vertices to adjust the shoreline."}
         </p>
         <div className="mt-3 flex flex-wrap justify-end gap-2">
           <Button variant="ghost" onClick={onDiscard}>
